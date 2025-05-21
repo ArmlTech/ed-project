@@ -18,6 +18,5 @@ public abstract class BaseViewCRUD extends JFrame{
     }
     
     protected abstract void carregarTabela();
-    protected abstract void limparFormulario();
 	
 }
