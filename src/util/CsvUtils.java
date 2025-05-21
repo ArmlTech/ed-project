@@ -1,38 +1,34 @@
 package util;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-
+import java.io.*;
 import br.edu.fateczl.Lista;
 
 public class CsvUtils {
 	
-	public static Lista<String> lerCSSV (String caminhoArquivo) {
+	public static Lista<String[]> lerArquivo (String caminhoArquivo) throws IOException {
+		File arquivo = new File(caminhoArquivo);
+		if(!arquivo.exists() || !arquivo.isFile()){
+			throw new IOException("Caminho do arquivo inválido");
+		}
+
+		Lista<String[]> linhas = new Lista<>();
 		
-		Lista<String> linhas = new Lista<>();
-		
-		try (BufferedReader br = new BufferedReader(new FileReader (caminhoArquivo))){
-			
+		try (BufferedReader br = new BufferedReader(new FileReader (arquivo))){
+
 			String linha;
 			while((linha = br.readLine()) != null) {
 				if (!linha.trim().isEmpty()) {
-					linhas.addLast(linha);
+					linhas.addLast(linha.split(";"));
 				}
 			}
-			
-			
 		} catch (Exception e) {
-			
-			e.printStackTrace();
-			
+			throw new IOException(e.getMessage());
 		}
-		
+
 		return linhas;
 	}
-	
-	public static void escreverCSV (String caminhoArquivo, Lista<String> linhas) {
+
+	public static void escreverCSV (String caminhoArquivo, Lista<String> linhas) throws IOException {
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo))){
 			
@@ -42,18 +38,19 @@ public class CsvUtils {
 			}
 			
 		} catch (Exception e) {
-
+			throw new IOException(e.getMessage());
 		}
 		
 	}
 	
-	public static void adicionarLinhaCSV (String caminhoArquivo, String novaLinha) {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo))){
+	public static void adicionarLinhaCSV (String caminhoArquivo, String novaLinha) throws IOException {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo, true))){
 			bw.write(novaLinha);
 			bw.newLine();
 		} catch (Exception e) {
-			
+			throw new IOException(e.getMessage());
 		}
 	}
+
 	
 }
