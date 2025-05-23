@@ -4,8 +4,6 @@ public class AreaConhecimento {
 	private int areaID;
 	private String nome;
 	
-	
-	
 	public AreaConhecimento(int areaID, String nome) {
 		super();
 		this.areaID = areaID;
@@ -26,6 +24,9 @@ public class AreaConhecimento {
 	@Override
 	public String toString() {
 		return nome;
+	}
+	public String toCSV() {
+		return areaID + ";" + nome;
 	}
 	
 	

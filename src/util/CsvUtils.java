@@ -7,8 +7,14 @@ public class CsvUtils {
 	
 	public static Lista<String[]> lerArquivo (String caminhoArquivo) throws IOException {
 		File arquivo = new File(caminhoArquivo);
-		if(!arquivo.exists() || !arquivo.isFile()){
-			throw new IOException("Caminho do arquivo inválido");
+		File dir = arquivo.getParentFile();
+		
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+				
+		if(!arquivo.exists()){
+			arquivo.createNewFile();
 		}
 
 		Lista<String[]> linhas = new Lista<>();

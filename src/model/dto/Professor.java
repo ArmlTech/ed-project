@@ -46,7 +46,7 @@ public class Professor {
     }
 
     public String toCSV() {
-        return cpf + ';' + nome + ';' + qtdPontos + ";" + areaID + "\n";
+        return cpf + ';' + nome + ';' + qtdPontos + ";" + areaID;
     }
 
 	@Override

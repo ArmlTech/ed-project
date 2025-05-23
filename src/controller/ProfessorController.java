@@ -1,20 +1,19 @@
 package controller;
 
-import br.edu.fateczl.Lista;
 import br.edu.fateczl.pilha.Pilha;
 import model.dto.AreaConhecimento;
 import model.dto.Professor;
-import service.DisciplinaService;
+import service.AreaConhecimentoService;
 import service.ProfessorService;
 
-public class ProfessorController {
+public class ProfessorController{
 
     private final ProfessorService service;
-    private final DisciplinaService disciplinaService;
+    private final AreaConhecimentoService areaService;
 
     public ProfessorController() {
         this.service = new ProfessorService();
-        this.disciplinaService = new DisciplinaService();
+        this.areaService = new AreaConhecimentoService();
     }
 
     public Pilha<Professor> listarProfessores() throws Exception {
@@ -33,13 +32,15 @@ public class ProfessorController {
         service.excluir(cpf);
     }
 
-	public Lista<AreaConhecimento> listarAreas() throws Exception {
-		return disciplinaService.listarAreas();
+	public Pilha<AreaConhecimento> listarAreas() throws Exception {
+		return areaService.listarAreas();
 	}
 
-	public AreaConhecimento buscarAreaPorId(int areaID) {
-		return disciplinaService.buscarAreaPorId();
+	public AreaConhecimento buscarAreaPorId(int id) throws Exception {
+		return areaService.procurarPorID(id);
 	}
+
+
 
 
 }

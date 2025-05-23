@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class ProfessorView extends JFrame {
+public class ProfessorView2 extends EntityMainView<Professor, ProfessorController> {
 	
 	ProfessorController controller;
 	private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public class ProfessorView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ProfessorView frame = new ProfessorView();
+					ProfessorView2 frame = new ProfessorView2();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					Alerta.erro(e);
@@ -66,7 +66,7 @@ public class ProfessorView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ProfessorView() {
+	public ProfessorView2() {
 		controller = new ProfessorController();
 		
 		setLocationRelativeTo(null);
@@ -87,7 +87,7 @@ public class ProfessorView extends JFrame {
 		JButton btnAbrirCadastro = new JButton("Cadastrar");
 		btnAbrirCadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProfessorCadastroDialog dialogCadastro = new ProfessorCadastroDialog(ProfessorView.this, () -> carregarTabela());
+				ProfessorCadastroDialog dialogCadastro = new ProfessorCadastroDialog(ProfessorView2.this, () -> carregarTabela());
 				dialogCadastro.setVisible(true);
 			}
 		});

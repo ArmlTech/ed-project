@@ -4,24 +4,22 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-
-import br.edu.fateczl.Lista;
 import br.edu.fateczl.pilha.Pilha;
 import controller.ProfessorController;
 import model.dto.AreaConhecimento;
 import model.dto.Professor;
+import util.Alerta;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ProfessorCadastroDialog extends JDialog {
 
@@ -43,61 +41,51 @@ public class ProfessorCadastroDialog extends JDialog {
 
 	public ProfessorCadastroDialog(JFrame parent, Runnable onSuccess) {
 		
+		super(parent, "Cadastro de Professor", true); //travar a tela de cadastro em relação ao parent até que seja fechada
 		controller = new ProfessorController();
 		
+		setLocationRelativeTo(parent); //ficar no centro da interface mae
+		setResizable(false);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
 				
 		JLabel lblProfessorNome = new JLabel("Nome");
-		lblProfessorNome.setBounds(10, 14, 27, 14);
-		contentPanel.add(lblProfessorNome);
 		
 		tfNome = new JTextField();
-		tfNome.setBounds(42, 11, 86, 20);
-		contentPanel.add(tfNome);
 		tfNome.setColumns(10);
 		
-		JLabel lblProfessorArea = new JLabel("Área de conhecimentos");
-		lblProfessorArea.setBounds(10, 92, 112, 14);
-		contentPanel.add(lblProfessorArea);
-		
-		JLabel lblProfessorQtdPontos = new JLabel("Quantidade de pontos");
-		lblProfessorQtdPontos.setBounds(10, 67, 107, 14);
-		contentPanel.add(lblProfessorQtdPontos);
+		JLabel label = new JLabel("");
 		
 		JLabel lblCPF = new JLabel("CPF");
-		lblCPF.setBounds(10, 42, 19, 14);
-		contentPanel.add(lblCPF);
-		
-		tfQtdPontos = new JTextField();
-		tfQtdPontos.setBounds(137, 64, 86, 20);
-		contentPanel.add(tfQtdPontos);
-		tfQtdPontos.setColumns(10);
 		
 		tfCPF = new JTextField();
-		tfCPF.setBounds(42, 39, 86, 20);
-		contentPanel.add(tfCPF);
 		tfCPF.setColumns(10);
 		
+		JLabel label_1 = new JLabel("");
+		
+		JLabel lblProfessorQtdPontos = new JLabel("Quantidade de pontos");
+		
+		JLabel label_2 = new JLabel("");
+		
+		tfQtdPontos = new JTextField();
+		tfQtdPontos.setColumns(10);
+		
+		JLabel lblProfessorArea = new JLabel("Área de conhecimentos");
+		
+		JLabel label_3 = new JLabel("");
+		
 		cbProfessorArea = new JComboBox<AreaConhecimento>();
-		cbProfessorArea.setBounds(132, 88, 30, 22);
-		contentPanel.add(cbProfessorArea);
 		
 		cbProfessorArea.addItem(new AreaConhecimento(-1, "Selecione"));
 		try {
-			Lista<AreaConhecimento> areas = controller.listarAreas();
-			for(int i = 0, length = areas.size(); i < length; i++) {
-				try {
-					cbProfessorArea.addItem(areas.get(i));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+			Pilha<AreaConhecimento> areas = controller.listarAreas();
+			while(!areas.isEmpty()) {
+				cbProfessorArea.addItem(areas.pop());
 			}
 		} catch(Exception e) {
-			System.err.println(e.getMessage());
+			Alerta.erro(ProfessorCadastroDialog.this, e);
 		}
 		
 		
@@ -107,8 +95,84 @@ public class ProfessorCadastroDialog extends JDialog {
 				limparFormulario();
 			}
 		});
-		btnLimpar.setBounds(42, 166, 63, 23);
-		contentPanel.add(btnLimpar);
+		
+		JLabel label_4 = new JLabel("");
+		
+		JLabel label_5 = new JLabel("");
+		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
+		gl_contentPanel.setHorizontalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(lblProfessorNome, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(tfNome, GroupLayout.PREFERRED_SIZE, 212, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(label, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(lblCPF, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(tfCPF, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(27)
+							.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(label_4, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+							.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addComponent(lblProfessorArea, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(cbProfessorArea, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addComponent(lblProfessorQtdPontos, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(tfQtdPontos, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)))
+							.addGap(10)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addGap(151)
+									.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE))
+								.addComponent(label_3, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap())
+		);
+		gl_contentPanel.setVerticalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGap(1)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(tfNome, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblProfessorNome, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblCPF, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+							.addComponent(tfCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblProfessorQtdPontos, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+							.addComponent(tfQtdPontos, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+						.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblProfessorArea, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+							.addComponent(cbProfessorArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(label_3, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+							.addComponent(label_4, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+							.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnLimpar, GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))))
+		);
+		contentPanel.setLayout(gl_contentPanel);
 				
 		
 		{
@@ -126,27 +190,17 @@ public class ProfessorCadastroDialog extends JDialog {
 						AreaConhecimento area = (AreaConhecimento) cbProfessorArea.getSelectedItem();
 						
 						if (nome.isBlank() || cpf.isBlank() || pontos.isBlank() || area.getAreaID() == -1) {
-							JOptionPane.showMessageDialog(ProfessorCadastroDialog.this, 
-									"Preencha todos os campos",
-									"Atenção",
-									JOptionPane.WARNING_MESSAGE);
+							Alerta.aviso(ProfessorCadastroDialog.this, "Preencha todos os campos");
 							return;
 						}
 						
 						try {
 							Professor professor = new Professor(cpf, nome, Float.parseFloat(pontos), area.getAreaID());
-							controller.cadastrar(professor);
-							Pilha<Professor> professores = controller.listarProfessores();
-							System.out.println(professores.pop().toString());
-							
+							controller.cadastrar(professor);							
 							onSuccess.run();
 							dispose();
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog(ProfessorCadastroDialog.this,
-		                            "Erro ao cadastrar professor: " + e1.getMessage(),
-		                            "Erro de Cadastro",
-		                            JOptionPane.ERROR_MESSAGE);
+							Alerta.erro(ProfessorCadastroDialog.this, e1);
 						}
 					}
 				});
