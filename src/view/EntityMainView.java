@@ -1,19 +1,14 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import br.edu.fateczl.pilha.Pilha;
 import controller.CrudController;
-import controller.ProfessorController;
 import util.Alerta;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -25,18 +20,21 @@ public abstract class EntityMainView<T, C extends CrudController<T>> extends JFr
 	protected JPanel contentPane;
 	protected DefaultTableModel tableModel;
 	protected JTable table;
+	protected final C controller;
 	
 	public EntityMainView(String titulo, String[] colunas, C controller) {
+		this.controller = controller;
 		setLocationRelativeTo(null);
 		setTitle(titulo);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(700,500);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
-		setContentPane(contentPane);
+		
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
 		
 		tableModel = new DefaultTableModel(colunas, 0); // criação do esqueleto da tabela e definir que as colunas aparecerão na primeira linha
 		table = new JTable(tableModel); //carregar esqueleto da tabela na tabela
@@ -46,13 +44,14 @@ public abstract class EntityMainView<T, C extends CrudController<T>> extends JFr
 		JButton btnNovo = new JButton("Cadastrar");
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroDialog dialog = new CadastroDialog(EntityMainView.this, () -> carregarTabela());
-				dialog.setVisible(true);
+				abrirTelaCadastro();
 			}
 		});
 		contentPane.add(btnNovo);
 	}
 	
+	protected abstract void abrirTelaCadastro();
+
 	protected void carregarTabela() {
 		tableModel.setRowCount(0);
 		
@@ -68,8 +67,8 @@ public abstract class EntityMainView<T, C extends CrudController<T>> extends JFr
 		}
 	}
 
-	protected abstract Pilha<T> buscarEntidades();
-	protected abstract Object[] extrairLinha(T entidade);
+	protected abstract Pilha<T> buscarEntidades() throws Exception;
+	protected abstract Object[] extrairLinha(T entidade) throws Exception;
 
 
 }

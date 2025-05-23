@@ -60,14 +60,14 @@ public class ProfessorDAO {
         CsvUtils.escreverCSV(caminhoArquivo, professoresCSV);
     }
 
-    public void excluir (String cpf) throws Exception {
+    public void excluir (Professor professorExcluir) throws Exception {
 
         Pilha<Professor> professores = buscarTodos();
         Lista<String> professoresCSV = new Lista<>();
 
         while(!professores.isEmpty()){
             Professor professor = professores.pop();
-            if(!professor.getCpf().equals(cpf)){
+            if(!professor.getCpf().equals(professorExcluir.getCpf())){
                 professoresCSV.addLast(professor.toCSV());
             }
         }

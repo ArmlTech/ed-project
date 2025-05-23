@@ -196,7 +196,7 @@ public class ProfessorCadastroDialog extends JDialog {
 						
 						try {
 							Professor professor = new Professor(cpf, nome, Float.parseFloat(pontos), area.getAreaID());
-							controller.cadastrar(professor);							
+							controller.salvar(professor);							
 							onSuccess.run();
 							dispose();
 						} catch (Exception e1) {

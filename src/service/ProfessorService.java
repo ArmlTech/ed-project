@@ -27,8 +27,8 @@ public class ProfessorService {
         dao.atualizarDados(professor);
     }
 
-    public void excluir(String cpf) throws Exception {
-        dao.excluir(cpf);
+    public void excluir(Professor professor) throws Exception {
+        dao.excluir(professor);
     }
 
     public boolean existeCPF(Professor professor){
