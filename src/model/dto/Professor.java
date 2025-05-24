@@ -45,10 +45,6 @@ public class Professor {
         this.areaID = areaID;
     }
 
-    public String toCSV() {
-        return cpf + ';' + nome + ';' + qtdPontos + ";" + areaID;
-    }
-
 	@Override
 	public String toString() {
 		return "Professor [cpf=" + cpf + ", nome=" + nome + ", qtdPontos=" + qtdPontos + ", areaID=" + areaID + "]";

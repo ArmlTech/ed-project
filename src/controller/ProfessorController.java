@@ -6,7 +6,7 @@ import model.dto.Professor;
 import service.AreaConhecimentoService;
 import service.ProfessorService;
 
-public class ProfessorController implements CrudController<Professor>{
+public class ProfessorController implements IGenericController<Professor, String>{
 
     private final ProfessorService service;
     private final AreaConhecimentoService areaService;
@@ -16,6 +16,27 @@ public class ProfessorController implements CrudController<Professor>{
         this.areaService = new AreaConhecimentoService();
     }
 
+	@Override
+	public void salvar(Professor entidade) throws Exception {
+		service.salvar(entidade);
+	}
+	
+	@Override
+	public Pilha<Professor> buscarTodos() throws Exception {
+		return service.buscarTodos();
+	}
+	
+	@Override
+	public void atualizar(Professor entidade) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void excluir(String cpf) throws Exception {
+		service.excluir(cpf);
+	}
+
 	public Pilha<AreaConhecimento> listarAreas() throws Exception {
 		return areaService.listarAreas();
 	}
@@ -23,22 +44,6 @@ public class ProfessorController implements CrudController<Professor>{
 	public AreaConhecimento buscarAreaPorId(int id) throws Exception {
 		return areaService.procurarPorID(id);
 	}
-
-	@Override
-	public Pilha<Professor> listar() throws Exception {
-		return service.listarProfessores();
-	}
-
-	@Override
-	public void salvar(Professor entidade) throws Exception {
-		service.cadastrar(entidade);
-	}
-
-	@Override
-	public void excluir(Professor entidade) throws Exception {
-		service.excluir(entidade);
-	}
-
 
 
 

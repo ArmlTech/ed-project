@@ -4,7 +4,7 @@ import br.edu.fateczl.pilha.Pilha;
 import model.dao.ProfessorDAO;
 import model.dto.Professor;
 
-public class ProfessorService {
+public class ProfessorService implements IGenericService<Professor, String> {
 
     private final ProfessorDAO dao;
 
@@ -12,28 +12,32 @@ public class ProfessorService {
         this.dao = new ProfessorDAO();
     }
     
-    public Pilha<Professor> listarProfessores() throws Exception {
-        return dao.buscarTodos();
-    }
-
-    public void cadastrar(Professor professor) throws Exception {
+    @Override
+    public void salvar(Professor professor) throws Exception {
         if(existeCPF(professor)){
             throw new Exception("CPF já cadastrado");
         }
-        dao.cadastrarNovo(professor);
+        dao.salvar(professor);
+    }
+    
+    @Override
+    public Pilha<Professor> buscarTodos() throws Exception {
+        return dao.buscarTodos();
     }
 
+    @Override
     public void atualizar(Professor professor) throws Exception {
-        dao.atualizarDados(professor);
+        dao.atualizar(professor);
     }
 
-    public void excluir(Professor professor) throws Exception {
-        dao.excluir(professor);
+    @Override
+    public void excluir(String cpf) throws Exception {
+        dao.excluir(cpf);
     }
 
     public boolean existeCPF(Professor professor){
         try {
-            dao.procurarPorCPF(professor.getCpf());
+            dao.buscarPorID(professor.getCpf());
         } catch (Exception e) {
             return false;
         }

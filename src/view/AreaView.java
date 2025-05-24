@@ -4,7 +4,7 @@ import br.edu.fateczl.pilha.Pilha;
 import controller.AreaConhecimentoController;
 import model.dto.AreaConhecimento;
 
-public class AreaView extends EntityMainView<AreaConhecimento, AreaConhecimentoController> {
+public class AreaView extends EntityMainView<AreaConhecimento, Integer, AreaConhecimentoController> {
 
 	/**
 	 * 
