@@ -1,19 +1,19 @@
 package model.dto;
 
 public class AreaConhecimento {
-	private int areaID;
+	private Integer id;
 	private String nome;
 	
-	public AreaConhecimento(int areaID, String nome) {
+	public AreaConhecimento(Integer areaID, String nome) {
 		super();
-		this.areaID = areaID;
+		this.id = areaID;
 		this.nome = nome;
 	}
 	public int getAreaID() {
-		return areaID;
+		return id;
 	}
 	public void setAreaID(int areaID) {
-		this.areaID = areaID;
+		this.id = areaID;
 	}
 	public String getNome() {
 		return nome;
@@ -25,9 +25,7 @@ public class AreaConhecimento {
 	public String toString() {
 		return nome;
 	}
-	public String toCSV() {
-		return areaID + ";" + nome;
-	}
+	
 	
 	
 }

@@ -75,8 +75,9 @@ public abstract class EntityMainView<T, ID, C extends IGenericController<T, ID>>
         }
     }
 
-    // Método abstrato para puxar as entidades através do controlador
-    protected abstract Pilha<T> buscarEntidades() throws Exception;
+    protected Pilha<T> buscarEntidades() throws Exception{
+    	return controller.buscarTodos();
+    };
     
     // Método abstrato para converter cada entidade em uma linha do tipo aceitado pela tableModel (Object[])
     protected abstract Object[] extrairLinha(T entidade) throws Exception;

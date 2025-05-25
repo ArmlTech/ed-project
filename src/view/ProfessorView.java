@@ -2,7 +2,6 @@
 package view;
 
 import javax.swing.SwingUtilities;
-import br.edu.fateczl.pilha.Pilha;
 import controller.ProfessorController;
 import model.dto.Professor;
 
@@ -27,11 +26,6 @@ public class ProfessorView extends EntityMainView<Professor, String, ProfessorCo
         });
     }
 
-    // Implementa a recuperação dos dados de Professores
-    @Override
-    protected Pilha<Professor> buscarEntidades() throws Exception {
-        return controller.buscarTodos();               // Chama listar() do controlador
-    }
 
     // Converte cada Professor em um array de objetos para exibição na tabela
     @Override

@@ -8,4 +8,5 @@ public interface IGenericController<T, ID> {
 	Pilha<T> buscarTodos() throws Exception;
 	void atualizar(T entidade) throws Exception;
 	void excluir(ID id) throws Exception;
+	T buscarPorID(ID id) throws Exception;
 }
