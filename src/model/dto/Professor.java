@@ -4,13 +4,13 @@ public class Professor {
     String cpf;
     String nome;
     Float qtdPontos;
-    int areaID;
+    Integer idAreaConhecimento;
 
-    public Professor(String cpf, String nome, Float qtdPontos, int areaID) {
+    public Professor(String cpf, String nome, Float qtdPontos, Integer idAreaConhecimento) {
         this.cpf = cpf;
         this.nome = nome;
         this.qtdPontos = qtdPontos;
-        this.areaID = areaID;
+        this.idAreaConhecimento = idAreaConhecimento;
     }
 
     public String getCpf() {
@@ -37,16 +37,16 @@ public class Professor {
         this.qtdPontos = qtdPontos;
     }
 
-    public int getAreaID() {
-        return areaID;
+    public Integer getAreaID() {
+        return idAreaConhecimento;
     }
 
-    public void setAreaID(int areaID) {
-        this.areaID = areaID;
+    public void setAreaID(Integer idAreaConhecimento) {
+        this.idAreaConhecimento = idAreaConhecimento;
     }
 
 	@Override
 	public String toString() {
-		return "Professor [cpf=" + cpf + ", nome=" + nome + ", qtdPontos=" + qtdPontos + ", areaID=" + areaID + "]";
+		return "Professor [cpf=" + cpf + ", nome=" + nome + ", qtdPontos=" + qtdPontos + ", areaID=" + idAreaConhecimento + "]";
 	}
 }

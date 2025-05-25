@@ -1,76 +1,114 @@
 package model.dao;
 
-import java.io.IOException;
-
 import br.edu.fateczl.Lista;
 import br.edu.fateczl.pilha.Pilha;
 import model.dto.AreaConhecimento;
 import util.CsvUtils;
 
-public class AreaConhecimentoDAO {
-	
+public class AreaConhecimentoDAO implements IGenericDAO<AreaConhecimento, Integer> {
+
 	final private String caminhoArquivo = "C:\\TEMP\\areas.csv";
-    public Pilha<AreaConhecimento> buscarTodos() throws Exception {
 
-        Lista<String[]> dados = CsvUtils.lerArquivo(caminhoArquivo);
-        Pilha<AreaConhecimento> areas = new Pilha<>();
+	@Override
+	public void salvar(AreaConhecimento entidade) throws Exception {
 
-        for(int i = 0, length = dados.size(); i < length; i++){
-            int id = Integer.parseInt(dados.get(i)[0]);
-            String nome = dados.get(i)[1];
-            AreaConhecimento area = new AreaConhecimento(id, nome);
-            areas.push(area);
-        }
-        return areas;
-    }
+		CsvUtils.adicionarLinhaCSV(caminhoArquivo, toCSV(entidade));
 
-    public AreaConhecimento procurarPorID(int id) throws Exception {
+	}
 
-        Pilha<AreaConhecimento> areas = buscarTodos();
+	@Override
+	public Pilha<AreaConhecimento> buscarTodos() throws Exception {
 
-        while(!areas.isEmpty()){
-        	AreaConhecimento area = areas.pop();
-            if(area.getAreaID() == id){
-                return area;
-            }
-        }
+		Lista<String[]> dados = CsvUtils.lerArquivo(caminhoArquivo);
 
-        throw new Exception("Professor não encontrado");
-    }
+		Pilha<AreaConhecimento> areas = new Pilha<>();
 
-    public void cadastrarNovo(AreaConhecimento area) throws IOException {
-        CsvUtils.adicionarLinhaCSV(caminhoArquivo, area.toCSV());
-    }
+		for (int i = 0, length = dados.size(); i < length; i++) {
 
-    public void atualizarDados(AreaConhecimento areaAtualizada) throws Exception {
+			Integer id = Integer.parseInt(dados.get(i)[0]);
+			String nome = dados.get(i)[1];
 
-    	Pilha<AreaConhecimento> areas = buscarTodos();
-        Lista<String> areasCSV = new Lista<>();
+			AreaConhecimento area = new AreaConhecimento(id, nome);
 
-        while(!areas.isEmpty()){
-        	AreaConhecimento area = areas.pop();
-            if(area.getAreaID() == areaAtualizada.getAreaID()){
-                area = areaAtualizada;
-            }
-            areasCSV.addLast(area.toCSV());
-        }
+			areas.push(area);
 
-        CsvUtils.escreverCSV(caminhoArquivo, areasCSV);
-    }
+		}
 
-    public void excluir (int id) throws Exception {
+		return areas;
 
-    	Pilha<AreaConhecimento> areas = buscarTodos();
-        Lista<String> areasCSV = new Lista<>();
+	}
 
-        while(!areas.isEmpty()){
-        	AreaConhecimento area = areas.pop();
-            if(area.getAreaID() != id){
-            	areasCSV.addLast(area.toCSV());
-            }
-        }
+	@Override
+	public void atualizar(AreaConhecimento entidade) throws Exception {
 
-        CsvUtils.escreverCSV(caminhoArquivo, areasCSV);
-    }
-    
+		Pilha<AreaConhecimento> areas = buscarTodos();
+
+		Lista<String> dados = new Lista<>();
+
+		while (!areas.isEmpty()) {
+
+			AreaConhecimento area = areas.pop();
+
+			if (area.getAreaID() == entidade.getAreaID()) {
+
+				area = entidade;
+
+			}
+
+			dados.addLast(toCSV(area));
+		}
+
+	}
+
+	@Override
+	public void excluir(Integer id) throws Exception {
+
+		Pilha<AreaConhecimento> areas = buscarTodos();
+
+		Lista<String> dados = new Lista<>();
+
+		while (!areas.isEmpty()) {
+
+			AreaConhecimento area = areas.pop();
+
+			if (area.getAreaID() != id) {
+
+				dados.addLast(toCSV(area));
+
+			}
+
+		}
+
+	}
+
+	@Override
+	public AreaConhecimento buscarPorID(Integer id) throws Exception {
+
+		Pilha<AreaConhecimento> areas = buscarTodos();
+
+		while (!areas.isEmpty()) {
+
+			AreaConhecimento area = areas.pop();
+
+			if (area.getAreaID() == id) {
+
+				return area;
+
+			}
+			
+		
+
+		}
+
+		throw new Exception("Área não encontrada");
+		
+	}
+
+	@Override
+	public String toCSV(AreaConhecimento entidade) {
+
+		return entidade.getAreaID() + ";" + entidade.getNome();
+
+	}
+
 }

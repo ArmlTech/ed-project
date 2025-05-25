@@ -44,4 +44,9 @@ public class ProfessorService implements IGenericService<Professor, String> {
         return true;
     }
 
+	@Override
+	public Professor buscarPorID(String id) throws Exception {
+		return dao.buscarPorID(id);
+	}
+
 }

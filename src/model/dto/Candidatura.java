@@ -1,5 +1,9 @@
 package model.dto;
 
-public class Candidatura {
+import java.time.LocalDateTime;
 
+public class Candidatura {
+	Integer idProcesso;
+	Integer idProfessor;
+	LocalDateTime data;
 }

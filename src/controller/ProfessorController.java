@@ -38,11 +38,16 @@ public class ProfessorController implements IGenericController<Professor, String
 	}
 
 	public Pilha<AreaConhecimento> listarAreas() throws Exception {
-		return areaService.listarAreas();
+		return areaService.buscarTodos();
 	}
 
-	public AreaConhecimento buscarAreaPorId(int id) throws Exception {
-		return areaService.procurarPorID(id);
+	public AreaConhecimento buscarAreaPorId(Integer id) throws Exception {
+		return areaService.buscarPorID(id);
+	}
+
+	@Override
+	public Professor buscarPorID(String id) throws Exception {
+		return service.buscarPorID(id);
 	}
 
 
