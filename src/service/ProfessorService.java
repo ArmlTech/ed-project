@@ -14,9 +14,7 @@ public class ProfessorService implements IGenericService<Professor, String> {
     
     @Override
     public void salvar(Professor professor) throws Exception {
-        if(existeCPF(professor)){
-            throw new Exception("CPF já cadastrado");
-        }
+        if(existeCPF(professor)) throw new Exception("CPF já cadastrado");
         dao.salvar(professor);
     }
     
