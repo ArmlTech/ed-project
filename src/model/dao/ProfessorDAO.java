@@ -83,7 +83,11 @@ public class ProfessorDAO implements IGenericDAO<Professor, String> {
 
 	@Override
 	public String toCSV(Professor entidade) {
-		return entidade.getCpf() + ';' + entidade.getNome() + ';' + entidade.getQtdPontos() + ";" + entidade.getAreaID();
+		return 
+            entidade.getCpf() + ';' + 
+            entidade.getNome() + ';' + 
+            entidade.getQtdPontos() + ";" + 
+            entidade.getAreaID();
 	}
 
  }

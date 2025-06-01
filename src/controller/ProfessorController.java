@@ -1,5 +1,6 @@
 package controller;
 
+import br.edu.fateczl.Lista;
 import br.edu.fateczl.pilha.Pilha;
 import model.dto.AreaConhecimento;
 import model.dto.Professor;
@@ -28,16 +29,15 @@ public class ProfessorController implements IGenericController<Professor, String
 	
 	@Override
 	public void atualizar(Professor entidade) throws Exception {
-		// TODO Auto-generated method stub
-		
+		service.atualizar(entidade);
 	}
 
 	@Override
-	public void excluir(String cpf) throws Exception {
-		service.excluir(cpf);
+	public void excluir(Professor entidade) throws Exception {
+		service.excluir(entidade.getCpf());
 	}
 
-	public Pilha<AreaConhecimento> listarAreas() throws Exception {
+	public Pilha<AreaConhecimento> buscarTodosArea() throws Exception {
 		return areaService.buscarTodos();
 	}
 
@@ -48,6 +48,32 @@ public class ProfessorController implements IGenericController<Professor, String
 	@Override
 	public Professor buscarPorID(String id) throws Exception {
 		return service.buscarPorID(id);
+	}
+
+	@Override
+	public Professor criarEntidade(Lista<String> dadosInput) throws Exception {
+
+		for(int i = 0, length = dadosInput.size(); i < length; i++){
+			if(dadosInput.get(i).isBlank()){
+				throw new Exception("Preencha todos os campos");
+			}
+		}
+
+		//TODO fazer lógica de verificação CPF aqui ou na service
+		String cpf = dadosInput.get(0);
+		String nome = dadosInput.get(1);
+
+		Float qtdPontos;
+		try {
+			qtdPontos = Float.parseFloat(dadosInput.get(2).replace(',', '.'));
+		} catch (NumberFormatException e) {
+			throw new Exception("Insira apenas números no campo Quantidade de Pontos");
+		}
+		
+		Integer idArea = Integer.parseInt(dadosInput.get(3));
+
+		Professor professor = new Professor(cpf, nome, qtdPontos, idArea);
+		return professor;
 	}
 
 

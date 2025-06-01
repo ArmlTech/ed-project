@@ -33,5 +33,9 @@ public class Alerta {
 	public static void sucesso(Component telaMae, String msg) {
         JOptionPane.showMessageDialog(telaMae, msg, "Sucesso", JOptionPane.PLAIN_MESSAGE);
     }
+
+	public static Boolean confirmar(Component telaMae, String msg){
+		return JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(telaMae, msg, "Confirmar", JOptionPane.YES_NO_OPTION);
+	}
 	
 }

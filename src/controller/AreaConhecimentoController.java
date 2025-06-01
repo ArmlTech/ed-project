@@ -1,5 +1,6 @@
 package controller;
 
+import br.edu.fateczl.Lista;
 import br.edu.fateczl.pilha.Pilha;
 import model.dto.AreaConhecimento;
 import service.AreaConhecimentoService;
@@ -34,13 +35,22 @@ public class AreaConhecimentoController implements IGenericController<AreaConhec
 	}
 
 	@Override
-	public void excluir(Integer id) throws Exception {
-		service.excluir(id);
+	public void excluir(AreaConhecimento entidade) throws Exception {
+		service.excluir(entidade.getID());
 	}
 
 	@Override
 	public AreaConhecimento buscarPorID(Integer id) throws Exception {
 		return service.buscarPorID(id);
+	}
+
+	@Override
+	public AreaConhecimento criarEntidade(Lista<String> dadosInput) throws Exception {
+		Integer id = Integer.parseInt(dadosInput.get(0));
+		String nome = dadosInput.get(1);
+
+		AreaConhecimento area = new AreaConhecimento(id, nome);
+		return area;
 	}
 
 

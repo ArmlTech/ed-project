@@ -49,7 +49,7 @@ public class AreaConhecimentoDAO implements IGenericDAO<AreaConhecimento, Intege
 
 			AreaConhecimento area = areas.pop();
 
-			if (area.getAreaID() == entidade.getAreaID()) {
+			if (area.getID() == entidade.getID()) {
 
 				area = entidade;
 
@@ -71,7 +71,7 @@ public class AreaConhecimentoDAO implements IGenericDAO<AreaConhecimento, Intege
 
 			AreaConhecimento area = areas.pop();
 
-			if (area.getAreaID() != id) {
+			if (area.getID() != id) {
 
 				dados.addLast(toCSV(area));
 
@@ -90,7 +90,7 @@ public class AreaConhecimentoDAO implements IGenericDAO<AreaConhecimento, Intege
 
 			AreaConhecimento area = areas.pop();
 
-			if (area.getAreaID() == id) {
+			if (area.getID() == id) {
 
 				return area;
 
@@ -107,7 +107,7 @@ public class AreaConhecimentoDAO implements IGenericDAO<AreaConhecimento, Intege
 	@Override
 	public String toCSV(AreaConhecimento entidade) {
 
-		return entidade.getAreaID() + ";" + entidade.getNome();
+		return entidade.getID() + ";" + entidade.getNome();
 
 	}
 
