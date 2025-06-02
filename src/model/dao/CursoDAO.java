@@ -40,27 +40,75 @@ public class CursoDAO implements IGenericDAO<Curso, String> {
 	}
 
 	@Override
-	public void atualizar(Curso entidade) throws Exception {
-		// TODO Auto-generated method stub
+	public void atualizar(Curso cursoAtualizado) throws Exception {
+
+		Pilha<Curso> cursos = buscarTodos();
+		Lista<String> cursosCsv = new Lista<>();
+
+		while (!cursos.isEmpty()) {
+
+			Curso curso = cursos.pop();
+
+			if (curso.getId() == (cursoAtualizado.getId())) {
+
+				curso = cursoAtualizado;
+
+			}
+
+			cursosCsv.addLast(toCSV(curso));
+
+		}
+
+		CsvUtils.escreverCSV(caminhoArquivo, cursosCsv);
 
 	}
 
 	@Override
 	public void excluir(String id) throws Exception {
-		// TODO Auto-generated method stub
+
+		Pilha<Curso> cursos = buscarTodos();
+		Lista<String> cursosCsv = new Lista<>();
+
+		while (!cursos.isEmpty()) {
+
+			Curso curso = cursos.pop();
+
+			if (curso.getId() != Integer.parseInt(id)) {
+
+				cursosCsv.addLast(toCSV(curso));
+
+			}
+
+		}
+
+		CsvUtils.escreverCSV(caminhoArquivo, cursosCsv);
 
 	}
 
 	@Override
 	public Curso buscarPorID(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+
+		Pilha<Curso> cursos = buscarTodos();
+
+		while (!cursos.isEmpty()) {
+
+			Curso curso = cursos.pop();
+
+			if (curso.getId() == Integer.parseInt(id)) {
+
+				return curso;
+
+			}
+
+		}
+
+		throw new Exception("Curso não encontrado");
 	}
 
 	@Override
 	public String toCSV(Curso entidade) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return entidade.getId() + ";" + entidade.getNome() + ";" + entidade.getIdAreaConhecimento();
 	}
 
 }
