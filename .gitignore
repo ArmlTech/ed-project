@@ -1,0 +1,9 @@
+# Ignore arquivos de compilação
+/bin/
+/target/
+/build/
+
+# Eclipse
+.classpath
+.project
+.settings/

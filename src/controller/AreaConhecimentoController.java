@@ -45,7 +45,7 @@ public class AreaConhecimentoController implements IGenericController<AreaConhec
 	}
 
 	@Override
-	public AreaConhecimento criarEntidade(Lista<String> dadosInput) throws Exception {
+	public AreaConhecimento criarEntidade(AreaConhecimento entidade, Lista<String> dadosInput) throws Exception {
 		Integer id = Integer.parseInt(dadosInput.get(0));
 		String nome = dadosInput.get(1);
 

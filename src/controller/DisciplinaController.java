@@ -38,7 +38,7 @@ public class DisciplinaController implements IGenericController<Disciplina, Inte
 
     @Override
     public Disciplina buscarPorID(Integer id) throws Exception {
-        return buscarPorID(id);
+        return service.buscarPorID(id);
     }
 
     public Curso buscarCursoPorId(Integer id) throws Exception{
@@ -50,21 +50,20 @@ public class DisciplinaController implements IGenericController<Disciplina, Inte
     }
 
     @Override
-    public Disciplina criarEntidade(Lista<String> dadosInput) throws Exception {
+    public Disciplina criarEntidade(Disciplina entidade, Lista<String> dadosInput) throws Exception {
 
-        Integer id;
         String nome = dadosInput.get(1);
         String diaSemana = dadosInput.get(2);
         String horaInicial = dadosInput.get(3);
         Double qtdHoras = Double.parseDouble(dadosInput.get(4));
-        Integer idCurso;
+        Integer idCurso = Integer.parseInt(dadosInput.get(5));
 
-        try {
-            id = Integer.parseInt(dadosInput.get(0));
-            idCurso = Integer.parseInt(dadosInput.get(5));
-        } catch (NumberFormatException e) {
-            throw new Exception("Erro de conversão númerica");
-        }
+        Integer id;
+		if(entidade == null){
+			id = 0;
+		}else{
+			id = entidade.getId();
+		}
 
         try {
             qtdHoras = Double.parseDouble(dadosInput.get(4));

@@ -7,7 +7,7 @@ import util.CsvUtils;
 
 import java.io.IOException;
 
-public class ProfessorDAO implements IGenericDAO<Professor, String> {
+public class ProfessorDAO implements IGenericDAO<Professor, Integer> {
 
     final private String caminhoArquivo = "C:\\TEMP\\professores.csv";
     
@@ -23,11 +23,12 @@ public class ProfessorDAO implements IGenericDAO<Professor, String> {
         Pilha<Professor> professores = new Pilha<>();
 
         for(int i = 0, length = dados.size(); i < length; i++){
-            String cpf = dados.get(i)[0];
-            String nome = dados.get(i)[1];
-            Float qtdPontos = Float.parseFloat(dados.get(i)[2]);
-            int areaID = Integer.parseInt(dados.get(i)[3]);
-            Professor professor = new Professor(cpf, nome, qtdPontos, areaID);
+            Integer id = Integer.parseInt(dados.get(i)[0]);
+            String cpf = dados.get(i)[1];
+            String nome = dados.get(i)[2];
+            Float qtdPontos = Float.parseFloat(dados.get(i)[3]);
+            Integer areaID = Integer.parseInt(dados.get(i)[4]);
+            Professor professor = new Professor(id, cpf, nome, qtdPontos, areaID);
             professores.push(professor);
         }
         return professores;
@@ -44,30 +45,29 @@ public class ProfessorDAO implements IGenericDAO<Professor, String> {
             if(professor.getCpf().equals(professorAtualizado.getCpf())){
                 professor = professorAtualizado;
             }
-            professoresCSV.addLast(toCSV(professor));
+            professoresCSV.addFirst(toCSV(professor));
         }
 
         CsvUtils.escreverCSV(caminhoArquivo, professoresCSV);
     }
     
     @Override
-    public void excluir (String cpf) throws Exception {
+    public void excluir (Integer id) throws Exception {
 
         Pilha<Professor> professores = buscarTodos();
         Lista<String> professoresCSV = new Lista<>();
 
         while(!professores.isEmpty()){
             Professor professor = professores.pop();
-            if(!professor.getCpf().equals(cpf)){
-                professoresCSV.addLast(toCSV(professor));
+            if(id != professor.getId()){
+                professoresCSV.addFirst(toCSV(professor));
             }
         }
 
         CsvUtils.escreverCSV(caminhoArquivo, professoresCSV);
     }
     
-    @Override
-    public Professor buscarPorID(String cpf) throws Exception {
+    public Professor buscarPorCPF(String cpf) throws Exception {
 
         Pilha<Professor> professores = buscarTodos();
 
@@ -84,10 +84,25 @@ public class ProfessorDAO implements IGenericDAO<Professor, String> {
 	@Override
 	public String toCSV(Professor entidade) {
 		return 
+            "" + entidade.getId() + ";" +
             entidade.getCpf() + ';' + 
             entidade.getNome() + ';' + 
             entidade.getQtdPontos() + ";" + 
             entidade.getAreaID();
 	}
+
+    @Override
+    public Professor buscarPorID(Integer id) throws Exception {
+
+        Pilha<Professor> professores = buscarTodos();
+        while(!professores.isEmpty()){
+            Professor professor = professores.pop();
+            if(professor.getId() == id){
+                return professor;
+            }
+        }
+
+        throw new Exception("Professor não encontrado");
+    }
 
  }

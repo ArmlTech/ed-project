@@ -4,7 +4,7 @@ import br.edu.fateczl.pilha.Pilha;
 import model.dao.ProfessorDAO;
 import model.dto.Professor;
 
-public class ProfessorService implements IGenericService<Professor, String> {
+public class ProfessorService implements IGenericService<Professor, Integer> {
 
     private final ProfessorDAO dao;
 
@@ -29,22 +29,26 @@ public class ProfessorService implements IGenericService<Professor, String> {
     }
 
     @Override
-    public void excluir(String cpf) throws Exception {
-        dao.excluir(cpf);
+    public void excluir(Integer id) throws Exception {
+        dao.excluir(id);
     }
 
     public boolean existeCPF(Professor professor){
         try {
-            dao.buscarPorID(professor.getCpf());
+            dao.buscarPorCPF(professor.getCpf());
         } catch (Exception e) {
             return false;
         }
         return true;
     }
 
-	@Override
-	public Professor buscarPorID(String id) throws Exception {
-		return dao.buscarPorID(id);
+	public Professor buscarPorCPF(String id) throws Exception {
+		return dao.buscarPorCPF(id);
 	}
+
+    @Override
+    public Professor buscarPorID(Integer id) throws Exception {
+        return dao.buscarPorID(id);
+    }
 
 }

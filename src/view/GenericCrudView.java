@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -32,7 +31,7 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
     protected JTable table;                         // Componente que exibe os dados em forma de tabela
     protected final C controller;                   // Controlador genérico para operações CRUD
     protected JPanel opcoesItemSelecionado;
-    String idEntidadeSelecionada;
+    ID idEntidadeSelecionada;
 
     JLabel lblDetalhesSelecionado = new JLabel();
     protected JButton btnNovo = new JButton("Cadastrar novo");
@@ -84,7 +83,8 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
         table.getSelectionModel().addListSelectionListener(e -> {
             if(!e.getValueIsAdjusting() && table.getSelectedRow() != -1){
                 int linha = table.getSelectedRow();
-                idEntidadeSelecionada = (String) table.getValueAt(linha, 0);
+
+                idEntidadeSelecionada = (ID) table.getValueAt(linha, 0);
                 lblDetalhesSelecionado.setText(getLabelTextEntidadeSelecionada(idEntidadeSelecionada));
                 btnExibir.setEnabled(true);
                 btnCancelarSelecao.setEnabled(true);
@@ -98,7 +98,13 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
         contentPane.add(opcoesItemSelecionado, BorderLayout.EAST);                   // Adiciona o botão ao painel principal
     }
     
-    
+    private void ocultarColunaID(int id) {
+        var colunaID = table.getColumnModel().getColumn(id);
+        colunaID.setMinWidth(0);
+        colunaID.setMaxWidth(0);
+        colunaID.setWidth(0);
+        colunaID.setPreferredWidth(0);
+    }
 
     private void cancelarSelecao() {
         lblDetalhesSelecionado.setText("Nenhum selecionado");
@@ -110,12 +116,14 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
         opcoesItemSelecionado.revalidate();
         opcoesItemSelecionado.repaint();
     }
+
+
  
     // Método que limpa e recarrega a tabela com dados obtidos via buscarEntidades()
     protected void carregarTabela() {
         tableModel.setRowCount(0);                  // Remove todas as linhas atuais
         try {
-            Pilha<T> entidades = buscarEntidades(); // Obtém os registros via controlador
+            Pilha<T> entidades = controller.buscarTodos();
             while(!entidades.isEmpty()) {
                 T entidade = entidades.pop();       // Para cada item na pilha
                 tableModel.addRow(extrairLinha(entidade)); // Converte em array de objetos e adiciona como linha da tabela
@@ -123,17 +131,14 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
         } catch (Exception e) {
             Alerta.erro(e);                        // Mostra mensagem de erro em caso de exceção
         }
+        ocultarColunaID(0);
     }
-
-    protected Pilha<T> buscarEntidades() throws Exception{
-    	return controller.buscarTodos();
-    };
 
     
     
     // Método abstrato para converter cada entidade em uma linha do tipo aceitado pela tableModel (Object[])
     protected abstract Object[] extrairLinha(T entidade) throws Exception;
-    protected abstract void exibirDetalhesDialog(String id);
-    protected abstract String getLabelTextEntidadeSelecionada(String id);
+    protected abstract void exibirDetalhesDialog(ID id);
+    protected abstract String getLabelTextEntidadeSelecionada(ID id);
     protected abstract void abrirTelaCadastro();
 }

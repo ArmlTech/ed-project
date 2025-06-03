@@ -1,9 +1,9 @@
 package model.dto;
 
 public class Curso {
-	Integer id;
-	String nome;
-	Integer idAreaConhecimento;
+	private Integer id;
+	private String nome;
+	private Integer idAreaConhecimento;
 
 	
 }

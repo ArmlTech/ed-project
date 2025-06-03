@@ -9,7 +9,7 @@ import view.GenericFormDialog.FormMode;
 
 //Define que essa classe herda a classe genérica, e dá o tipo de entidiade Professor
 // e o tipo do controlador CrudController<Professor>
-public class ProfessorView extends GenericCrudView<Professor, String, ProfessorController> {
+public class ProfessorView extends GenericCrudView<Professor, Integer, ProfessorController> {
     private static final long serialVersionUID = 1L;
 
     // Construtor passa título, colunas e controlador para a superclasse (classe mãe)
@@ -22,7 +22,7 @@ public class ProfessorView extends GenericCrudView<Professor, String, ProfessorC
         SwingUtilities.invokeLater(() -> {
             ProfessorController controller = new ProfessorController(); // Cria o controlador
             String titulo = "Professores";
-            String[] colunas = {"CPF", "Nome", "Pontos", "Área do conhecimento"};
+            String[] colunas = {"ID","CPF", "Nome", "Pontos", "Área do conhecimento"};
             ProfessorView janela = new ProfessorView(titulo, colunas, controller); // Cria a tela
             janela.setVisible(true);    // Exibe a janela
         });
@@ -33,6 +33,7 @@ public class ProfessorView extends GenericCrudView<Professor, String, ProfessorC
     @Override
     protected Object[] extrairLinha(Professor entidade) throws Exception {
         return new Object[] {
+            entidade.getId(),
             entidade.getCpf(),
             entidade.getNome(),
             entidade.getQtdPontos(),
@@ -55,7 +56,7 @@ public class ProfessorView extends GenericCrudView<Professor, String, ProfessorC
     }
 
     @Override
-    protected void exibirDetalhesDialog(String id) {
+    protected void exibirDetalhesDialog(Integer id) {
         try {
             ProfessorFormDialog dialog = new ProfessorFormDialog(
                 "Gerenciar professor", 
@@ -72,7 +73,7 @@ public class ProfessorView extends GenericCrudView<Professor, String, ProfessorC
     }
 
     @Override
-    protected String getLabelTextEntidadeSelecionada(String id) {
+    protected String getLabelTextEntidadeSelecionada(Integer id) {
         
         try {
             Professor professor = controller.buscarPorID(id);

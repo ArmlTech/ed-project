@@ -3,7 +3,7 @@ package model.dto;
 import java.time.LocalDateTime;
 
 public class Candidatura {
-	Integer idProcesso;
-	Integer idProfessor;
-	LocalDateTime data;
+	private Integer idProcesso;
+	private Integer idProfessor;
+	private LocalDateTime data;
 }
