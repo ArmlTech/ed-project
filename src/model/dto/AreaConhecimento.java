@@ -1,6 +1,6 @@
 package model.dto;
 
-public class AreaConhecimento {
+public class AreaConhecimento implements IGenericEntity {
 	private Integer id;
 	private String nome;
 	
@@ -9,7 +9,7 @@ public class AreaConhecimento {
 		this.id = areaID;
 		this.nome = nome;
 	}
-	public int getID() {
+	public Integer getId() {
 		return id;
 	}
 	public void setID(int areaID) {

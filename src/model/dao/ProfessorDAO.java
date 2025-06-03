@@ -1,14 +1,12 @@
 package model.dao;
 
-import br.edu.fateczl.Lista;
-import br.edu.fateczl.pilha.Pilha;
+import br.edu.fateczl.Fila;
 import model.dto.Professor;
-import util.CsvUtils;
 
-import java.io.IOException;
 
-public class ProfessorDAO implements IGenericDAO<Professor, Integer> {
+public class ProfessorDAO extends GenericDAO<Professor, Integer> {
 
+<<<<<<< HEAD
 	final private String caminhoArquivo = "C:\\TEMP\\professores.csv";
 
 	@Override
@@ -77,32 +75,44 @@ public class ProfessorDAO implements IGenericDAO<Professor, Integer> {
 				return professor;
 			}
 		}
+=======
+    public ProfessorDAO() {
+        super("professores.csv");
+    }
+        
+    public Professor buscarPorCPF(String cpf) throws Exception {
+
+        Fila<Professor> professores = buscarTodos();
+
+        while(!professores.isEmpty()){
+            Professor professor = professores.remove();
+            if(professor.getCpf().equals(cpf)){
+                return professor;
+            }
+        }
+>>>>>>> 18d9c03 (refactor: generalizando dao pra simplificar o codigo e criação do crud inscrição)
 
 		throw new Exception("Professor não encontrado");
 	}
 
-	@Override
-	public String toCSV(Professor entidade) {
-		return 
+    @Override
+    protected String entityToCSV(Professor entidade) {
+        return 
             "" + entidade.getId() + ";" +
             entidade.getCpf() + ';' + 
             entidade.getNome() + ';' + 
             entidade.getQtdPontos() + ";" + 
             entidade.getAreaID();
-	}
+    }
 
     @Override
-    public Professor buscarPorID(Integer id) throws Exception {
-
-        Pilha<Professor> professores = buscarTodos();
-        while(!professores.isEmpty()){
-            Professor professor = professores.pop();
-            if(professor.getId() == id){
-                return professor;
-            }
-        }
-
-        throw new Exception("Professor não encontrado");
+    protected Professor csvToEntity(String[] dados) {
+        Integer id = Integer.parseInt(dados[0]);
+        String cpf = dados[1];
+        String nome = dados[2];
+        Float qtdPontos = Float.parseFloat(dados[3]);
+        Integer areaID = Integer.parseInt(dados[4]);
+        return new Professor(id, cpf, nome, qtdPontos, areaID);
     }
 
 }

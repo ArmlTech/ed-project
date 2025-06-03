@@ -1,7 +1,7 @@
 package controller;
 
+import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
-import br.edu.fateczl.pilha.Pilha;
 import model.dto.Curso;
 import model.dto.Disciplina;
 import service.CursoService;
@@ -22,7 +22,7 @@ public class DisciplinaController implements IGenericController<Disciplina, Inte
     }
 
     @Override
-    public Pilha<Disciplina> buscarTodos() throws Exception {
+    public Fila<Disciplina> buscarTodos() throws Exception {
         return service.buscarTodos();
     }
 
@@ -45,25 +45,25 @@ public class DisciplinaController implements IGenericController<Disciplina, Inte
         return cursoService.buscarPorID(id);
     }
 
-    public Pilha<Curso> buscarTodosCursos() throws Exception{
+    public Fila<Curso> buscarTodosCursos() throws Exception{
         return cursoService.buscarTodos();
     }
 
     @Override
     public Disciplina criarEntidade(Disciplina entidade, Lista<String> dadosInput) throws Exception {
 
-        String nome = dadosInput.get(1);
-        String diaSemana = dadosInput.get(2);
-        String horaInicial = dadosInput.get(3);
-        Double qtdHoras = Double.parseDouble(dadosInput.get(4));
-        Integer idCurso = Integer.parseInt(dadosInput.get(5));
-
-        Integer id;
-		if(entidade == null){
-			id = 0;
-		}else{
-			id = entidade.getId();
+        for(int i = 0, length = dadosInput.size(); i < length; i++){
+			if(dadosInput.get(i).isBlank()){
+				throw new Exception("Preencha todos os campos");
+			}
 		}
+
+        Integer id = (entidade == null) ? 0 : entidade.getId();
+        String nome = dadosInput.get(0);
+        String diaSemana = dadosInput.get(1);
+        String horaInicial = dadosInput.get(2);
+        Double qtdHoras = Double.parseDouble(dadosInput.get(3));
+        Integer idCurso = Integer.parseInt(dadosInput.get(4));
 
         try {
             qtdHoras = Double.parseDouble(dadosInput.get(4));
@@ -72,6 +72,7 @@ public class DisciplinaController implements IGenericController<Disciplina, Inte
         }
 
 		Disciplina disciplina = new Disciplina(id, nome, diaSemana, horaInicial, qtdHoras, idCurso);
+        
         return disciplina;
     }
 

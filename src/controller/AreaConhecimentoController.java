@@ -1,7 +1,7 @@
 package controller;
 
+import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
-import br.edu.fateczl.pilha.Pilha;
 import model.dto.AreaConhecimento;
 import service.AreaConhecimentoService;
 
@@ -21,7 +21,7 @@ public class AreaConhecimentoController implements IGenericController<AreaConhec
 	}
 
 	@Override
-	public Pilha<AreaConhecimento> buscarTodos() throws Exception {
+	public Fila<AreaConhecimento> buscarTodos() throws Exception {
 
 		return service.buscarTodos();
 
@@ -36,7 +36,7 @@ public class AreaConhecimentoController implements IGenericController<AreaConhec
 
 	@Override
 	public void excluir(AreaConhecimento entidade) throws Exception {
-		service.excluir(entidade.getID());
+		service.excluir(entidade.getId());
 	}
 
 	@Override

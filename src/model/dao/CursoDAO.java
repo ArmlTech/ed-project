@@ -1,5 +1,7 @@
 package model.dao;
+import model.dto.Curso;
 
+<<<<<<< HEAD
 import br.edu.fateczl.Lista;
 import br.edu.fateczl.pilha.Pilha;
 import model.dto.Curso;
@@ -109,6 +111,26 @@ public class CursoDAO implements IGenericDAO<Curso, String> {
 	public String toCSV(Curso entidade) {
 
 		return entidade.getId() + ";" + entidade.getNome() + ";" + entidade.getIdAreaConhecimento();
+	}
+=======
+public class CursoDAO extends GenericDAO<Curso, Integer> {
+>>>>>>> 18d9c03 (refactor: generalizando dao pra simplificar o codigo e criação do crud inscrição)
+
+	public CursoDAO() {
+		super("cursos.csv");
+	}
+
+	@Override
+	public String entityToCSV(Curso entidade) {
+		return entidade.getId() + ";" + entidade.getNome() + ";" + entidade.getIdAreaConhecimento();
+	}
+
+	@Override
+	protected Curso csvToEntity(String[] dados) {
+		Integer id = Integer.parseInt(dados[0]);
+		String nome = dados[1];
+		Integer idAreaConhecimento = Integer.parseInt(dados[2]);
+		return new Curso(id, nome, idAreaConhecimento);
 	}
 
 }

@@ -1,15 +1,11 @@
 package service;
-
-import br.edu.fateczl.pilha.Pilha;
 import model.dao.ProfessorDAO;
 import model.dto.Professor;
 
-public class ProfessorService implements IGenericService<Professor, Integer> {
-
-    private final ProfessorDAO dao;
+public class ProfessorService extends GenericService<Professor, Integer, ProfessorDAO> {
 
     public ProfessorService(){
-        this.dao = new ProfessorDAO();
+        super(new ProfessorDAO());
     }
     
     @Override
@@ -18,21 +14,6 @@ public class ProfessorService implements IGenericService<Professor, Integer> {
         dao.salvar(professor);
     }
     
-    @Override
-    public Pilha<Professor> buscarTodos() throws Exception {
-        return dao.buscarTodos();
-    }
-
-    @Override
-    public void atualizar(Professor professor) throws Exception {
-        dao.atualizar(professor);
-    }
-
-    @Override
-    public void excluir(Integer id) throws Exception {
-        dao.excluir(id);
-    }
-
     public boolean existeCPF(Professor professor){
         try {
             dao.buscarPorCPF(professor.getCpf());
@@ -45,10 +26,4 @@ public class ProfessorService implements IGenericService<Professor, Integer> {
 	public Professor buscarPorCPF(String id) throws Exception {
 		return dao.buscarPorCPF(id);
 	}
-
-    @Override
-    public Professor buscarPorID(Integer id) throws Exception {
-        return dao.buscarPorID(id);
-    }
-
 }
