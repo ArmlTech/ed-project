@@ -1,7 +1,7 @@
 package controller;
 
+import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
-import br.edu.fateczl.pilha.Pilha;
 import model.dto.AreaConhecimento;
 import model.dto.Professor;
 import service.AreaConhecimentoService;
@@ -23,7 +23,7 @@ public class ProfessorController implements IGenericController<Professor, Intege
 	}
 	
 	@Override
-	public Pilha<Professor> buscarTodos() throws Exception {
+	public Fila<Professor> buscarTodos() throws Exception {
 		return service.buscarTodos();
 	}
 	
@@ -46,7 +46,7 @@ public class ProfessorController implements IGenericController<Professor, Intege
 		return service.buscarPorCPF(id);
 	}
 
-	public Pilha<AreaConhecimento> buscarTodosArea() throws Exception {
+	public Fila<AreaConhecimento> buscarTodosArea() throws Exception {
 		return areaService.buscarTodos();
 	}
 
@@ -65,22 +65,15 @@ public class ProfessorController implements IGenericController<Professor, Intege
 
 		//TODO fazer lógica de verificação CPF aqui ou na service
 
-		Integer id;
-		if(entidade == null){
-			id = 0;
-		}else{
-			id = entidade.getId();
-		}
+		Integer id = (entidade == null) ? 0 : entidade.getId();
 		String cpf = dadosInput.get(0);
 		String nome = dadosInput.get(1);
-
 		Float qtdPontos;
 		try {
 			qtdPontos = Float.parseFloat(dadosInput.get(2).replace(',', '.'));
 		} catch (NumberFormatException e) {
 			throw new Exception("Insira apenas números no campo Quantidade de Pontos");
 		}
-		
 		Integer idArea = Integer.parseInt(dadosInput.get(3));
 
 		Professor professor = new Professor(id, cpf, nome, qtdPontos, idArea);

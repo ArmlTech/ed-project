@@ -8,8 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
-import br.edu.fateczl.pilha.Pilha;
 import controller.ProfessorController;
 import model.dto.AreaConhecimento;
 import model.dto.Professor;
@@ -47,9 +47,9 @@ public class ProfessorFormDialog extends GenericFormDialog<Professor, Integer, P
        comboArea = new JComboBox<>();
         comboArea.addItem(new AreaConhecimento(-1, "Selecione"));
 		try {
-			Pilha<AreaConhecimento> areas = controller.buscarTodosArea();
+			Fila<AreaConhecimento> areas = controller.buscarTodosArea();
 			while(!areas.isEmpty()) {
-				comboArea.addItem(areas.pop());
+				comboArea.addItem(areas.remove());
 			}
 		} catch(Exception e) {
 			Alerta.erro(ProfessorFormDialog.this, e);
@@ -67,7 +67,7 @@ public class ProfessorFormDialog extends GenericFormDialog<Professor, Integer, P
             dadosInput.addLast(txtNome.getText());
             dadosInput.addLast(txtQtdPontos.getText());
             AreaConhecimento areaSelecionada = (AreaConhecimento) comboArea.getSelectedItem();
-            dadosInput.addLast(Integer.toString(areaSelecionada.getID()));
+            dadosInput.addLast(Integer.toString(areaSelecionada.getId()));
         } catch (Exception e) {
             Alerta.erro(ProfessorFormDialog.this, e);
         }
@@ -95,6 +95,7 @@ public class ProfessorFormDialog extends GenericFormDialog<Professor, Integer, P
     @Override
     protected void preencherDadosCampos(FormMode currentFormMode, Professor entidade) {
         
+
         switch(currentFormMode){
             case CREATE:
                 limparFormulario();

@@ -32,7 +32,7 @@ public class AreaConhecimentoView extends GenericCrudView<AreaConhecimento, Inte
 
 	@Override
 	protected Object[] extrairLinha(AreaConhecimento entidade) throws Exception {
-		return new Object[] { entidade.getID(), entidade.getNome() };
+		return new Object[] { entidade.getId(), entidade.getNome() };
 	}
 
 	@Override

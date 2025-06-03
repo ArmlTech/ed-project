@@ -1,6 +1,6 @@
 package model.dto;
 
-public class Disciplina {
+public class Disciplina implements IGenericEntity {
 	private Integer id;
 	private String nome;
 	private String diaSemana;

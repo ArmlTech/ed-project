@@ -4,6 +4,8 @@ import javax.swing.SwingUtilities;
 
 import controller.DisciplinaController;
 import model.dto.Disciplina;
+import util.Alerta;
+import view.GenericFormDialog.FormMode;
 
 public class DisciplinaView extends GenericCrudView<Disciplina, Integer, DisciplinaController> {
 
@@ -23,7 +25,15 @@ public class DisciplinaView extends GenericCrudView<Disciplina, Integer, Discipl
 
     @Override
     protected void abrirTelaCadastro() {
-        // TODO Auto-generated method stub
+       DisciplinaFormDialog dialog = new DisciplinaFormDialog(
+            "Gerenciar disciplinas", 
+            controller, 
+            this, 
+            ()-> carregarTabela(), 
+            FormMode.CREATE, 
+            null
+        );
+        dialog.setVisible(true);
     }
 
     @Override
@@ -34,21 +44,35 @@ public class DisciplinaView extends GenericCrudView<Disciplina, Integer, Discipl
             entidade.getDiaSemana(),
             entidade.getHoraInicial(),
             entidade.getQtdHoras(),
-            "estrutura"
+            controller.buscarCursoPorId(entidade.getIdCurso()).getNome()
         };
     }
 
     @Override
     protected void exibirDetalhesDialog(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exibirDetalhesDialog'");
+        Disciplina entidade;
+        try {
+            entidade = controller.buscarPorID(id);
+            DisciplinaFormDialog dialog = new DisciplinaFormDialog(
+                "Gerenciar disciplinas", 
+                controller, 
+                this, 
+                ()-> carregarTabela(), 
+                FormMode.VIEW, 
+                entidade
+            );
+            dialog.setVisible(true);
+
+        } catch (Exception e) {
+            Alerta.erro(this, e);
+        }
+        
     }
 
     @Override
     protected String getLabelTextEntidadeSelecionada(Integer id) {
         try {
             Disciplina disciplina = controller.buscarPorID(id);
-            System.out.println(disciplina.toString());
             return "<html>ID: " + disciplina.getId() + " <br> Nome: " + disciplina.getNome() + "</html>";
         } catch (Exception e) {
             return "Erro: " + e.getMessage();

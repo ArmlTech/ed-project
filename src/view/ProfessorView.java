@@ -1,4 +1,4 @@
-// Implementação concreta para Professores, usando a estrutura genérica EntityMainView
+// Implementação concreta para Professores, usando a estrutura genérica
 package view;
 
 import javax.swing.SwingUtilities;
@@ -68,7 +68,7 @@ public class ProfessorView extends GenericCrudView<Professor, Integer, Professor
             );
             dialog.setVisible(true);
         } catch (Exception e) {
-            Alerta.erro(ProfessorView.this, e);
+            Alerta.erro(this, e);
         }
     }
 

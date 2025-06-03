@@ -1,6 +1,6 @@
 package model.dto;
 
-public class Professor {
+public class Professor implements IGenericEntity {
     private Integer id;
     private String cpf;
     private String nome;
@@ -56,8 +56,20 @@ public class Professor {
 
     @Override
     public String toString() {
-        return "Professor [id=" + id + ", cpf=" + cpf + ", nome=" + nome + ", qtdPontos=" + qtdPontos
-                + ", idAreaConhecimento=" + idAreaConhecimento + "]";
+        return nome;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Professor)) return false;
+        Professor other = (Professor) obj;
+        return this.id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
 	

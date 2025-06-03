@@ -13,7 +13,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import br.edu.fateczl.pilha.Pilha;
+import br.edu.fateczl.Fila;
 import controller.IGenericController;
 import util.Alerta;
 
@@ -123,9 +123,9 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
     protected void carregarTabela() {
         tableModel.setRowCount(0);                  // Remove todas as linhas atuais
         try {
-            Pilha<T> entidades = controller.buscarTodos();
+            Fila<T> entidades = controller.buscarTodos();
             while(!entidades.isEmpty()) {
-                T entidade = entidades.pop();       // Para cada item na pilha
+                T entidade = entidades.remove();       // Para cada item na pilha
                 tableModel.addRow(extrairLinha(entidade)); // Converte em array de objetos e adiciona como linha da tabela
             }
         } catch (Exception e) {
