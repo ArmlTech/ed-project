@@ -1,17 +1,26 @@
 package model.dto;
 
 public class Professor {
-    String cpf;
-    String nome;
-    Float qtdPontos;
-    Integer idAreaConhecimento;
+    private Integer id;
+    private String cpf;
+    private String nome;
+    private Float qtdPontos;
+    private Integer idAreaConhecimento;
 
-    public Professor(String cpf, String nome, Float qtdPontos, Integer idAreaConhecimento) {
+    public Professor(Integer id, String cpf, String nome, Float qtdPontos, Integer idAreaConhecimento) {
+        this.id = id;
         this.cpf = cpf;
         this.nome = nome;
         this.qtdPontos = qtdPontos;
         this.idAreaConhecimento = idAreaConhecimento;
     }
+
+    public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
     public String getCpf() {
         return cpf;
@@ -45,8 +54,11 @@ public class Professor {
         this.idAreaConhecimento = idAreaConhecimento;
     }
 
-	@Override
-	public String toString() {
-		return "Professor [cpf=" + cpf + ", nome=" + nome + ", qtdPontos=" + qtdPontos + ", areaID=" + idAreaConhecimento + "]";
-	}
+    @Override
+    public String toString() {
+        return "Professor [id=" + id + ", cpf=" + cpf + ", nome=" + nome + ", qtdPontos=" + qtdPontos
+                + ", idAreaConhecimento=" + idAreaConhecimento + "]";
+    }
+
+	
 }

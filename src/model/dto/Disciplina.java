@@ -1,12 +1,12 @@
 package model.dto;
 
 public class Disciplina {
-	Integer id;
-	String nome;
-	String diaSemana;
-	String horaInicial;
-	Double qtdHoras;
-	Integer idCurso;
+	private Integer id;
+	private String nome;
+	private String diaSemana;
+	private String horaInicial;
+	private Double qtdHoras;
+	private Integer idCurso;
 	public Disciplina(Integer id, String nome, String diaSemana, String horaInicial, Double qtdHoras, Integer idCurso) {
 		this.id = id;
 		this.nome = nome;

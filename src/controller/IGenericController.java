@@ -10,5 +10,5 @@ public interface IGenericController<T, ID> {
 	void atualizar(T entidade) throws Exception;
 	void excluir(T entidade) throws Exception;
 	T buscarPorID(ID id) throws Exception;
-	T criarEntidade(Lista<String> dadosInput) throws Exception;
+	T criarEntidade(T entidade, Lista<String> dadosInput) throws Exception;
 }

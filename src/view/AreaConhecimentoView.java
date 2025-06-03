@@ -36,13 +36,13 @@ public class AreaConhecimentoView extends GenericCrudView<AreaConhecimento, Inte
 	}
 
 	@Override
-	protected void exibirDetalhesDialog(String id) {
+	protected void exibirDetalhesDialog(Integer id) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'exibirDetalhesDialog'");
 	}
 
 	@Override
-	protected String getLabelTextEntidadeSelecionada(String id) {
+	protected String getLabelTextEntidadeSelecionada(Integer id) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'getLabelTextEntidadeSelecionada'");
 	}

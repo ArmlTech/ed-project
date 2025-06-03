@@ -15,7 +15,7 @@ import model.dto.AreaConhecimento;
 import model.dto.Professor;
 import util.Alerta;
 
-public class ProfessorFormDialog extends GenericFormDialog<Professor, String, ProfessorController> {
+public class ProfessorFormDialog extends GenericFormDialog<Professor, Integer, ProfessorController> {
 
     private JTextField txtCPF;
     private JTextField txtNome;
@@ -104,7 +104,7 @@ public class ProfessorFormDialog extends GenericFormDialog<Professor, String, Pr
             case VIEW:
                 Professor professor;
                 try {
-                    professor = controller.buscarPorID(entidade.getCpf());
+                    professor = controller.buscarPorID(entidade.getId());
                     txtCPF.setText(professor.getCpf());
                     txtNome.setText(professor.getNome());
                     txtQtdPontos.setText(Float.toString(professor.getQtdPontos()));

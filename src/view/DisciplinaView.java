@@ -10,7 +10,7 @@ public class DisciplinaView extends GenericCrudView<Disciplina, Integer, Discipl
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             String titulo = "Disciplinas";
-            String colunas[] = {"Nome", "Dia da semana", "Hora inicial", "Qtd. de horas", "Curso"};
+            String colunas[] = {"ID","Nome", "Dia da semana", "Hora inicial", "Qtd. de horas", "Curso"};
             DisciplinaController controller = new DisciplinaController();
             DisciplinaView tela = new DisciplinaView(titulo, colunas, controller);
             tela.setVisible(true);
@@ -29,6 +29,7 @@ public class DisciplinaView extends GenericCrudView<Disciplina, Integer, Discipl
     @Override
     protected Object[] extrairLinha(Disciplina entidade) throws Exception {
         return new Object[] {
+            entidade.getId(),
             entidade.getNome(),
             entidade.getDiaSemana(),
             entidade.getHoraInicial(),
@@ -38,15 +39,21 @@ public class DisciplinaView extends GenericCrudView<Disciplina, Integer, Discipl
     }
 
     @Override
-    protected void exibirDetalhesDialog(String id) {
+    protected void exibirDetalhesDialog(Integer id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exibirDetalhesDialog'");
     }
 
     @Override
-    protected String getLabelTextEntidadeSelecionada(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getLabelTextEntidadeSelecionada'");
+    protected String getLabelTextEntidadeSelecionada(Integer id) {
+        try {
+            Disciplina disciplina = controller.buscarPorID(id);
+            System.out.println(disciplina.toString());
+            return "<html>ID: " + disciplina.getId() + " <br> Nome: " + disciplina.getNome() + "</html>";
+        } catch (Exception e) {
+            return "Erro: " + e.getMessage();
+        }
+        
     }
 
 }

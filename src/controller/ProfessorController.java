@@ -7,7 +7,7 @@ import model.dto.Professor;
 import service.AreaConhecimentoService;
 import service.ProfessorService;
 
-public class ProfessorController implements IGenericController<Professor, String>{
+public class ProfessorController implements IGenericController<Professor, Integer>{
 
     private final ProfessorService service;
     private final AreaConhecimentoService areaService;
@@ -34,7 +34,16 @@ public class ProfessorController implements IGenericController<Professor, String
 
 	@Override
 	public void excluir(Professor entidade) throws Exception {
-		service.excluir(entidade.getCpf());
+		service.excluir(entidade.getId());
+	}
+
+	@Override
+	public Professor buscarPorID(Integer id) throws Exception {
+		return service.buscarPorID(id);
+	}
+
+	public Professor buscarPorCPF(String id) throws Exception {
+		return service.buscarPorCPF(id);
 	}
 
 	public Pilha<AreaConhecimento> buscarTodosArea() throws Exception {
@@ -46,12 +55,7 @@ public class ProfessorController implements IGenericController<Professor, String
 	}
 
 	@Override
-	public Professor buscarPorID(String id) throws Exception {
-		return service.buscarPorID(id);
-	}
-
-	@Override
-	public Professor criarEntidade(Lista<String> dadosInput) throws Exception {
+	public Professor criarEntidade(Professor entidade, Lista<String> dadosInput) throws Exception {
 
 		for(int i = 0, length = dadosInput.size(); i < length; i++){
 			if(dadosInput.get(i).isBlank()){
@@ -60,6 +64,13 @@ public class ProfessorController implements IGenericController<Professor, String
 		}
 
 		//TODO fazer lógica de verificação CPF aqui ou na service
+
+		Integer id;
+		if(entidade == null){
+			id = 0;
+		}else{
+			id = entidade.getId();
+		}
 		String cpf = dadosInput.get(0);
 		String nome = dadosInput.get(1);
 
@@ -72,7 +83,7 @@ public class ProfessorController implements IGenericController<Professor, String
 		
 		Integer idArea = Integer.parseInt(dadosInput.get(3));
 
-		Professor professor = new Professor(cpf, nome, qtdPontos, idArea);
+		Professor professor = new Professor(id, cpf, nome, qtdPontos, idArea);
 		return professor;
 	}
 

@@ -2,7 +2,6 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -80,7 +79,7 @@ public abstract class GenericFormDialog<T, ID, C extends IGenericController<T, I
         btnSalvar.addActionListener(e -> {
             Lista<String> dadosInput = getDadosInput();
             try {
-                T novaEntidade = controller.criarEntidade(dadosInput);
+                T novaEntidade = controller.criarEntidade(entidade, dadosInput);
                 if(currentFormMode == FormMode.CREATE) controller.salvar(novaEntidade);
                 if(currentFormMode == FormMode.EDIT) controller.atualizar(novaEntidade);
                 Alerta.sucesso(GenericFormDialog.this, "Operação realizada com sucesso");
