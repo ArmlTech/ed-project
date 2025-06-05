@@ -1,6 +1,8 @@
 // Implementação concreta para Professores, usando a estrutura genérica
 package view;
 
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 import controller.ProfessorController;
 import model.dto.Professor;
@@ -20,11 +22,18 @@ public class ProfessorView extends GenericCrudView<Professor, Integer, Professor
     // Ponto de entrada da aplicação
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            ProfessorController controller = new ProfessorController(); // Cria o controlador
-            String titulo = "Professores";
-            String[] colunas = {"ID","CPF", "Nome", "Pontos", "Área do conhecimento"};
-            ProfessorView janela = new ProfessorView(titulo, colunas, controller); // Cria a tela
-            janela.setVisible(true);    // Exibe a janela
+            
+            try {
+                ProfessorController controller = new ProfessorController();
+                String titulo = "Professores";
+                String[] colunas = {"ID","CPF", "Nome", "Pontos", "Área do conhecimento"};
+                ProfessorView janela = new ProfessorView(titulo, colunas, controller); // Cria a tela
+                janela.setVisible(true);    // Exibe a janela
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } // Cria o controlador
+            
         });
     }
 

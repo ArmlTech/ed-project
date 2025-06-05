@@ -1,5 +1,7 @@
 package view;
 
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 
 import controller.InscricaoController;
@@ -15,11 +17,18 @@ public class InscricaoView extends GenericCrudView<Candidatura, Integer, Inscric
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            InscricaoController controller = new InscricaoController();
-            String titulo = "Inscrições";
-            String[] colunas = {"ID","Inscrito", "Código do processo", "Disciplina"};
-            InscricaoView tela = new InscricaoView(titulo, colunas, controller);
-            tela.setVisible(true);
+            
+            try {
+                InscricaoController controller = new InscricaoController();
+                String titulo = "Inscrições";
+                String[] colunas = {"ID","Inscrito", "Código do processo", "Disciplina"};
+                InscricaoView tela = new InscricaoView(titulo, colunas, controller);
+                tela.setVisible(true);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
         });
     }
 

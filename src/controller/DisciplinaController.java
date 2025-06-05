@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
 import model.dto.Curso;
@@ -11,7 +13,7 @@ public class DisciplinaController implements IGenericController<Disciplina, Inte
     private final DisciplinaService service;
     private final CursoService cursoService;
 
-    public DisciplinaController(){
+    public DisciplinaController() throws IOException{
         service = new DisciplinaService();
         cursoService = new CursoService();
     }

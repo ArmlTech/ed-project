@@ -1,5 +1,7 @@
 package service;
 
+import java.io.IOException;
+
 import model.dao.ProcessoDAO;
 import model.dto.Disciplina;
 import model.dto.Processo;
@@ -7,7 +9,7 @@ import model.dto.Processo;
 public class ProcessoService extends GenericService<Processo, Integer, ProcessoDAO> {
 
     private final DisciplinaService disciplinaService;
-    public ProcessoService() {
+    public ProcessoService() throws IOException {
         super(new ProcessoDAO());
         this.disciplinaService = new DisciplinaService();
     }

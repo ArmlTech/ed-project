@@ -1,12 +1,14 @@
 package model.dao;
 
+import java.io.IOException;
+
 import br.edu.fateczl.Fila;
 import model.dto.Professor;
 
 
 public class ProfessorDAO extends GenericDAO<Professor, Integer> {
 
-    public ProfessorDAO() {
+    public ProfessorDAO() throws IOException {
         super("professores.csv");
     }
         

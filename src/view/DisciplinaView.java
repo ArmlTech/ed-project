@@ -1,5 +1,7 @@
 package view;
 
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 
 import controller.DisciplinaController;
@@ -11,11 +13,18 @@ public class DisciplinaView extends GenericCrudView<Disciplina, Integer, Discipl
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            String titulo = "Disciplinas";
-            String colunas[] = {"ID","Nome", "Dia da semana", "Hora inicial", "Qtd. de horas", "Curso"};
-            DisciplinaController controller = new DisciplinaController();
-            DisciplinaView tela = new DisciplinaView(titulo, colunas, controller);
-            tela.setVisible(true);
+            
+            try {
+                String titulo = "Disciplinas";
+                String colunas[] = {"ID","Nome", "Dia da semana", "Hora inicial", "Qtd. de horas", "Curso"};
+                DisciplinaController controller = new DisciplinaController();
+                DisciplinaView tela = new DisciplinaView(titulo, colunas, controller);
+                tela.setVisible(true);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
         });
     }
 

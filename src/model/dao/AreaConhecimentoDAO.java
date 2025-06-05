@@ -1,9 +1,11 @@
 package model.dao;
+import java.io.IOException;
+
 import model.dto.AreaConhecimento;
 
 public class AreaConhecimentoDAO extends GenericDAO<AreaConhecimento, Integer> {
 
-	public AreaConhecimentoDAO() {
+	public AreaConhecimentoDAO() throws IOException {
 		super("areas.csv");
 	}
 

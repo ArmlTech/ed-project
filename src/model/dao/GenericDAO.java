@@ -1,6 +1,9 @@
 package model.dao;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
@@ -9,10 +12,20 @@ import util.CsvUtils;
 
 public abstract class GenericDAO<T extends IGenericEntity, ID>{
 
-    private String caminhoArquivo = "C:\\TEMP\\";
+    private String caminhoArquivo;
 
-    public GenericDAO(String nomeArquivoCSV){
-        caminhoArquivo+= nomeArquivoCSV;
+    public GenericDAO(String nomeArquivoCSV) throws IOException{
+        caminhoArquivo = resolveCaminho(nomeArquivoCSV);
+    }
+
+    private static String resolveCaminho(String nomeArquivoCSV) throws IOException {
+        String os = System.getProperty("os.name").toLowerCase();
+        String baseDir = os.contains("win") ? "C:\\TEMP\\" : "/tmp/";
+
+        Path diretorio = Paths.get(baseDir);
+        Files.createDirectories(diretorio);
+        
+        return diretorio.resolve(nomeArquivoCSV).toString();
     }
 
     public void salvar(T entidade) throws IOException {
