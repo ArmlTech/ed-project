@@ -1,9 +1,11 @@
 package model.dao;
+import java.io.IOException;
+
 import model.dto.Processo;
 
 public class ProcessoDAO extends GenericDAO<Processo, Integer> {
 
-    public ProcessoDAO() {
+    public ProcessoDAO() throws IOException {
         super("processos.csv");
     }
 

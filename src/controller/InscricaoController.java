@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -20,7 +21,7 @@ public class InscricaoController implements IGenericController<Candidatura, Inte
     private final ProfessorService profService;
     private final ProcessoService processoService;
 
-    public InscricaoController() {
+    public InscricaoController() throws IOException {
         this.service = new InscricaoService();
         this.profService = new ProfessorService();
         this.processoService = new ProcessoService();

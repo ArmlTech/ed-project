@@ -1,4 +1,6 @@
 package model.dao;
+import java.io.IOException;
+
 import model.dto.Curso;
 
 <<<<<<< HEAD
@@ -116,7 +118,7 @@ public class CursoDAO implements IGenericDAO<Curso, String> {
 public class CursoDAO extends GenericDAO<Curso, Integer> {
 >>>>>>> 18d9c03 (refactor: generalizando dao pra simplificar o codigo e criação do crud inscrição)
 
-	public CursoDAO() {
+	public CursoDAO() throws IOException {
 		super("cursos.csv");
 	}
 

@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
 import model.dto.AreaConhecimento;
@@ -12,7 +14,7 @@ public class ProfessorController implements IGenericController<Professor, Intege
     private final ProfessorService service;
     private final AreaConhecimentoService areaService;
 
-    public ProfessorController() {
+    public ProfessorController() throws IOException {
         this.service = new ProfessorService();
         this.areaService = new AreaConhecimentoService();
     }

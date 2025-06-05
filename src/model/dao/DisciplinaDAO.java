@@ -1,11 +1,13 @@
 package model.dao;
 
+import java.io.IOException;
+
 import model.dto.Disciplina;
 
 
 public class DisciplinaDAO extends GenericDAO<Disciplina, Integer> {
 
-    public DisciplinaDAO() {
+    public DisciplinaDAO() throws IOException {
         super("disciplinas.csv");
     }
  

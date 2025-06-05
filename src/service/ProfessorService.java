@@ -1,10 +1,12 @@
 package service;
+import java.io.IOException;
+
 import model.dao.ProfessorDAO;
 import model.dto.Professor;
 
 public class ProfessorService extends GenericService<Professor, Integer, ProfessorDAO> {
 
-    public ProfessorService(){
+    public ProfessorService() throws IOException{
         super(new ProfessorDAO());
     }
     

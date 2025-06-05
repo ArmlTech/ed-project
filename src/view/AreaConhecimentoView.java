@@ -1,5 +1,7 @@
 package view;
 
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 
 import controller.AreaConhecimentoController;
@@ -15,12 +17,18 @@ public class AreaConhecimentoView extends GenericCrudView<AreaConhecimento, Inte
 	public static void main(String[] args) {
 
 		SwingUtilities.invokeLater(() -> {
-			AreaConhecimentoController controller = new AreaConhecimentoController();
-			String titulo = "Área de Conhecimento";
-			String[] colunas = { "ID", "Nome" };
-
-			AreaConhecimentoView janela = new AreaConhecimentoView(titulo, colunas, controller);
-			janela.setVisible(true);
+			
+			try {
+				AreaConhecimentoController controller = new AreaConhecimentoController();
+				String titulo = "Área de Conhecimento";
+				String[] colunas = { "ID", "Nome" };
+				AreaConhecimentoView janela = new AreaConhecimentoView(titulo, colunas, controller);
+				janela.setVisible(true);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		});
 
 	}
