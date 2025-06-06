@@ -1,48 +1,95 @@
 package view;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.JTextField;
+import java.awt.GridLayout;
 import br.edu.fateczl.Lista;
 import controller.CursoController;
 import model.dto.Curso;
+import util.Alerta;
+import view.GenericFormDialog.FormMode;
 
 public class CursoFormDialog extends GenericFormDialog<Curso, Integer, CursoController> {
 
-    public CursoFormDialog(String titulo, CursoController controller, JFrame parent, Runnable onSuccess, FormMode mode,
-            Curso entidade) {
-        super(titulo, controller, parent, onSuccess, mode, entidade);
-        //TODO Auto-generated constructor stub
-    }
+	// private JTextField txtId;
+	private JTextField txtNome;
 
-    @Override
-    protected JPanel construirFormulario() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'construirFormulario'");
-    }
+	public CursoFormDialog(String titulo, CursoController controller, JFrame parent, Runnable onSuccess, FormMode mode,
+			Curso entidade) {
+		super(titulo, controller, parent, onSuccess, mode, entidade);
+		this.controller = controller;
+	}
 
-    @Override
-    protected void habilitarCamposPorModo(FormMode currentFormMode) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'habilitarCamposPorModo'");
-    }
+	@Override
+	protected JPanel construirFormulario() {
 
-    @Override
-    protected void preencherDadosCampos(FormMode currentFormMode, Curso entidade) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'preencherDadosCampos'");
-    }
+		JPanel painel = new JPanel(new GridLayout(4, 2, 10, 10));
 
-    @Override
-    protected Lista<String> getDadosInput() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDadosInput'");
-    }
+		painel.add(new JLabel("Nome: "));
 
-    @Override
-    protected void limparFormulario() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'limparFormulario'");
-    }
+		return painel;
+	}
+
+	@Override
+	protected void habilitarCamposPorModo(FormMode currentFormMode) {
+
+		Boolean enabled = (currentFormMode == FormMode.CREATE || currentFormMode == FormMode.EDIT);
+		txtNome.setEnabled(currentFormMode == FormMode.CREATE);
+
+	}
+
+	@Override
+	protected void preencherDadosCampos(FormMode currentFormMode, Curso entidade) {
+
+		switch (currentFormMode) {
+
+		case CREATE:
+			limparFormulario();
+		case EDIT:
+			break;
+		case VIEW:
+			Curso curso;
+			try {
+
+				curso = controller.buscarPorID(entidade.getId());
+				txtNome.setText(curso.getNome());
+
+			} catch (Exception e) {
+
+				Alerta.erro(CursoFormDialog.this, e);
+
+			}
+
+		default:
+			break;
+
+		}
+
+	}
+
+	@Override
+	protected Lista<String> getDadosInput() {
+
+		Lista<String> dadosInput = new Lista<>();
+		try {
+			dadosInput.addLast(txtNome.getText());
+		} catch (Exception e) {
+
+			Alerta.erro(CursoFormDialog.this, e);
+
+		}
+
+		return dadosInput;
+
+	}
+
+	@Override
+	protected void limparFormulario() {
+
+		txtNome.setText("");
+
+	}
 
 }
