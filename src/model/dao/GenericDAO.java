@@ -14,21 +14,36 @@ public abstract class GenericDAO<T extends IGenericEntity, ID>{
 
     private String caminhoArquivo;
 
-    public GenericDAO(String nomeArquivoCSV) throws IOException{
+    public GenericDAO(String nomeArquivoCSV){
         caminhoArquivo = resolveCaminho(nomeArquivoCSV);
     }
 
-    private static String resolveCaminho(String nomeArquivoCSV) throws IOException {
+    private static String resolveCaminho(String nomeArquivoCSV)  {
         String os = System.getProperty("os.name").toLowerCase();
         String baseDir = os.contains("win") ? "C:\\TEMP\\" : "/tmp/";
 
         Path diretorio = Paths.get(baseDir);
-        Files.createDirectories(diretorio);
+        try {
+            Files.createDirectories(diretorio);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
         return diretorio.resolve(nomeArquivoCSV).toString();
     }
 
-    public void salvar(T entidade) throws IOException {
+    public void salvar(T entidade) throws Exception {
+        int maiorId = 0;
+        Fila<T> entidades = buscarTodos();
+        while(!entidades.isEmpty()) {
+            T e = entidades.remove();
+            if (e.getId() > maiorId) {
+                maiorId = e.getId();
+            }
+        }
+        entidade.setId(maiorId + 1);
+
         CsvUtils.adicionarLinhaCSV(caminhoArquivo, entityToCSV(entidade));
     }
 

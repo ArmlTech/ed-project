@@ -9,7 +9,7 @@ import model.dto.Processo;
 public class ProcessoService extends GenericService<Processo, Integer, ProcessoDAO> {
 
     private final DisciplinaService disciplinaService;
-    public ProcessoService() throws IOException {
+    public ProcessoService() {
         super(new ProcessoDAO());
         this.disciplinaService = new DisciplinaService();
     }

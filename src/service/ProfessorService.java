@@ -6,7 +6,7 @@ import model.dto.Professor;
 
 public class ProfessorService extends GenericService<Professor, Integer, ProfessorDAO> {
 
-    public ProfessorService() throws IOException{
+    public ProfessorService() {
         super(new ProfessorDAO());
     }
     

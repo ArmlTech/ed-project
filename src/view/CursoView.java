@@ -1,12 +1,14 @@
 package view;
 
+import javax.swing.JFrame;
+
 import controller.CursoController;
 import model.dto.Curso;
 
 public class CursoView extends GenericCrudView<Curso, Integer, CursoController> {
 
-    public CursoView(String titulo, String[] colunas, CursoController controller) {
-        super(titulo, colunas, controller);
+    public CursoView(JFrame parent, String titulo, String[] colunas, CursoController controller) {
+        super(parent, titulo, colunas, controller);
         //TODO Auto-generated constructor stub
     }
 

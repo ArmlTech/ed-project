@@ -11,7 +11,7 @@ public class AreaConhecimentoController implements IGenericController<AreaConhec
 
 	private final AreaConhecimentoService service; 
 	
-	public AreaConhecimentoController() throws IOException {
+	public AreaConhecimentoController() {
 		this.service = new AreaConhecimentoService();
 	}
 	

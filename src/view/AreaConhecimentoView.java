@@ -1,36 +1,13 @@
 package view;
-
-import java.io.IOException;
-
-import javax.swing.SwingUtilities;
-
+import javax.swing.JFrame;
 import controller.AreaConhecimentoController;
 import model.dto.AreaConhecimento;
 
 public class AreaConhecimentoView extends GenericCrudView<AreaConhecimento, Integer, AreaConhecimentoController> {
 
 	private static final long serialVersionUID = 1L;
-	public AreaConhecimentoView(String titulo, String[] colunas, AreaConhecimentoController controller) {
-		super(titulo, colunas, controller);
-	}
-
-	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(() -> {
-			
-			try {
-				AreaConhecimentoController controller = new AreaConhecimentoController();
-				String titulo = "Área de Conhecimento";
-				String[] colunas = { "ID", "Nome" };
-				AreaConhecimentoView janela = new AreaConhecimentoView(titulo, colunas, controller);
-				janela.setVisible(true);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		});
-
+	public AreaConhecimentoView(JFrame parent, String titulo, String[] colunas, AreaConhecimentoController controller) {
+		super(parent, titulo, colunas, controller);
 	}
 
 	@Override

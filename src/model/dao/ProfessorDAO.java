@@ -8,7 +8,8 @@ import model.dto.Professor;
 
 public class ProfessorDAO extends GenericDAO<Professor, Integer> {
 
-    public ProfessorDAO() throws IOException {
+
+    public ProfessorDAO() {
         super("professores.csv");
     }
         
@@ -29,7 +30,7 @@ public class ProfessorDAO extends GenericDAO<Professor, Integer> {
     @Override
     protected String entityToCSV(Professor entidade) {
         return 
-            "" + entidade.getId() + ";" +
+            entidade.getId() + ";" +
             entidade.getCpf() + ';' + 
             entidade.getNome() + ';' + 
             entidade.getQtdPontos() + ";" + 

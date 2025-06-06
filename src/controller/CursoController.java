@@ -7,7 +7,7 @@ import model.dto.Curso;
 public class CursoController implements IGenericController<Curso, Integer> {
 
     @Override
-    public void salvar(Curso entidade) throws Exception {
+    public void salvar(Curso entidade) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'salvar'");
     }

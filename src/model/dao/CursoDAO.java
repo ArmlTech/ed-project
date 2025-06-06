@@ -5,7 +5,7 @@ import model.dto.Curso;
 
 public class CursoDAO extends GenericDAO<Curso, Integer> {
 
-	public CursoDAO() throws IOException {
+	public CursoDAO() {
 		super("cursos.csv");
 	}
 

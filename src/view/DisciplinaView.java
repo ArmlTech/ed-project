@@ -1,8 +1,6 @@
 package view;
 
-import java.io.IOException;
-
-import javax.swing.SwingUtilities;
+import javax.swing.JFrame;
 
 import controller.DisciplinaController;
 import model.dto.Disciplina;
@@ -11,25 +9,8 @@ import view.GenericFormDialog.FormMode;
 
 public class DisciplinaView extends GenericCrudView<Disciplina, Integer, DisciplinaController> {
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            
-            try {
-                String titulo = "Disciplinas";
-                String colunas[] = {"ID","Nome", "Dia da semana", "Hora inicial", "Qtd. de horas", "Curso"};
-                DisciplinaController controller = new DisciplinaController();
-                DisciplinaView tela = new DisciplinaView(titulo, colunas, controller);
-                tela.setVisible(true);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            
-        });
-    }
-
-    public DisciplinaView(String titulo, String[] colunas, DisciplinaController controller) {
-        super(titulo, colunas, controller);
+    public DisciplinaView(JFrame parent, String titulo, String[] colunas, DisciplinaController controller) {
+        super(parent, titulo, colunas, controller);
     }
 
     @Override

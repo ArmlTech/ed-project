@@ -11,10 +11,12 @@ public class Curso implements IGenericEntity {
 		this.idAreaConhecimento = idAreaConhecimento;
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}

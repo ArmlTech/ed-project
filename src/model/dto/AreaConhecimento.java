@@ -12,8 +12,9 @@ public class AreaConhecimento implements IGenericEntity {
 	public Integer getId() {
 		return id;
 	}
-	public void setID(int areaID) {
-		this.id = areaID;
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getNome() {
 		return nome;

@@ -15,6 +15,7 @@ public class Candidatura implements IGenericEntity {
 		this.data = data;
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}

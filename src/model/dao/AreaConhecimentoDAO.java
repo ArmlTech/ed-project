@@ -5,7 +5,7 @@ import model.dto.AreaConhecimento;
 
 public class AreaConhecimentoDAO extends GenericDAO<AreaConhecimento, Integer> {
 
-	public AreaConhecimentoDAO() throws IOException {
+	public AreaConhecimentoDAO() {
 		super("areas.csv");
 	}
 
