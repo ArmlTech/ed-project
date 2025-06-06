@@ -40,7 +40,7 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
     
 
     // Construtor: recebe título da janela, colunas da tabela e o controlador
-    public GenericCrudView(String titulo, String[] colunas, C controller) {
+    public GenericCrudView(JFrame parent, String titulo, String[] colunas, C controller) {
         this.controller = controller;             // Armazena o controlador que será usado na função BuscarEntidades()
         setTitle(titulo);                           // Define o texto da barra de título
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Fecha apenas esta janela
@@ -96,6 +96,21 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
         btnNovo.addActionListener(e -> abrirTelaCadastro());
         
         contentPane.add(opcoesItemSelecionado, BorderLayout.EAST);                   // Adiciona o botão ao painel principal
+    
+        if (parent != null) {
+    parent.setEnabled(false); // trava a janela principal
+}
+
+    addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent e) {
+            if (parent != null) {
+                parent.setEnabled(true); // destrava a janela principal
+                parent.toFront(); // traz a janela principal de volta
+            }
+        }
+    });
+
     }
     
     private void ocultarColunaID(int id) {

@@ -118,7 +118,7 @@ public class CursoDAO implements IGenericDAO<Curso, String> {
 public class CursoDAO extends GenericDAO<Curso, Integer> {
 >>>>>>> 18d9c03 (refactor: generalizando dao pra simplificar o codigo e criação do crud inscrição)
 
-	public CursoDAO() throws IOException {
+	public CursoDAO() {
 		super("cursos.csv");
 	}
 

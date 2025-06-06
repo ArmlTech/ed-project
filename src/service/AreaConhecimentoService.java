@@ -7,7 +7,7 @@ import model.dto.AreaConhecimento;
 
 public class AreaConhecimentoService extends GenericService<AreaConhecimento, Integer, AreaConhecimentoDAO> {
 
-	public AreaConhecimentoService() throws IOException {
+	public AreaConhecimentoService(){
 		super(new AreaConhecimentoDAO());
 	}
 

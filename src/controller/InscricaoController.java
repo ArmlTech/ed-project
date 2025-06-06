@@ -21,7 +21,7 @@ public class InscricaoController implements IGenericController<Candidatura, Inte
     private final ProfessorService profService;
     private final ProcessoService processoService;
 
-    public InscricaoController() throws IOException {
+    public InscricaoController() {
         this.service = new InscricaoService();
         this.profService = new ProfessorService();
         this.processoService = new ProcessoService();

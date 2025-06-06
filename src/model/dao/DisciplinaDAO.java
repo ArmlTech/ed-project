@@ -7,7 +7,7 @@ import model.dto.Disciplina;
 
 public class DisciplinaDAO extends GenericDAO<Disciplina, Integer> {
 
-    public DisciplinaDAO() throws IOException {
+    public DisciplinaDAO() {
         super("disciplinas.csv");
     }
  

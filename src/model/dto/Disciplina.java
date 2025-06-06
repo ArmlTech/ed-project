@@ -15,9 +15,11 @@ public class Disciplina implements IGenericEntity {
 		this.qtdHoras = qtdHoras;
 		this.idCurso = idCurso;
 	}
+	@Override
 	public Integer getId() {
 		return id;
 	}
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}

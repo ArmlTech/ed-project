@@ -14,7 +14,7 @@ public class ProfessorController implements IGenericController<Professor, Intege
     private final ProfessorService service;
     private final AreaConhecimentoService areaService;
 
-    public ProfessorController() throws IOException {
+    public ProfessorController() {
         this.service = new ProfessorService();
         this.areaService = new AreaConhecimentoService();
     }

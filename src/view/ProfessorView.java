@@ -1,9 +1,8 @@
 // Implementação concreta para Professores, usando a estrutura genérica
 package view;
 
-import java.io.IOException;
 
-import javax.swing.SwingUtilities;
+import javax.swing.JFrame;
 import controller.ProfessorController;
 import model.dto.Professor;
 import util.Alerta;
@@ -15,29 +14,10 @@ public class ProfessorView extends GenericCrudView<Professor, Integer, Professor
     private static final long serialVersionUID = 1L;
 
     // Construtor passa título, colunas e controlador para a superclasse (classe mãe)
-    public ProfessorView(String titulo, String[] colunas, ProfessorController controller) {
-        super(titulo, colunas, controller); //constrói a classe mãe a partir do seu construtor
+    public ProfessorView(JFrame parent, String titulo, String[] colunas, ProfessorController controller) {
+        super(parent, titulo, colunas, controller); //constrói a classe mãe a partir do seu construtor
     }
     
-    // Ponto de entrada da aplicação
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            
-            try {
-                ProfessorController controller = new ProfessorController();
-                String titulo = "Professores";
-                String[] colunas = {"ID","CPF", "Nome", "Pontos", "Área do conhecimento"};
-                ProfessorView janela = new ProfessorView(titulo, colunas, controller); // Cria a tela
-                janela.setVisible(true);    // Exibe a janela
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } // Cria o controlador
-            
-        });
-    }
-
-
     // Converte cada Professor em um array de objetos para exibição na tabela
     @Override
     protected Object[] extrairLinha(Professor entidade) throws Exception {

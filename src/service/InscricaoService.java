@@ -1,14 +1,12 @@
 package service;
 
-import java.io.IOException;
-
 import br.edu.fateczl.Fila;
 import model.dao.InscricaoDAO;
 import model.dto.Candidatura;
 
 public class InscricaoService extends GenericService<Candidatura, Integer, InscricaoDAO> {
 
-    public InscricaoService() throws IOException {
+    public InscricaoService() {
         super(new InscricaoDAO());
     }
 

@@ -1,13 +1,12 @@
 package model.dao;
 import model.dto.Candidatura;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class InscricaoDAO extends GenericDAO<Candidatura, Integer> {
 
-    public InscricaoDAO() throws IOException {
+    public InscricaoDAO(){
         super("inscricoes.csv");
     }
     

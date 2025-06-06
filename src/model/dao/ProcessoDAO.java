@@ -5,7 +5,7 @@ import model.dto.Processo;
 
 public class ProcessoDAO extends GenericDAO<Processo, Integer> {
 
-    public ProcessoDAO() throws IOException {
+    public ProcessoDAO() {
         super("processos.csv");
     }
 

@@ -7,7 +7,7 @@ import model.dto.Disciplina;
 
 public class DisciplinaService extends GenericService<Disciplina, Integer, DisciplinaDAO> {
 
-	public DisciplinaService() throws IOException{
+	public DisciplinaService(){
 		super(new DisciplinaDAO());
 	}
 

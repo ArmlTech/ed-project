@@ -1,8 +1,6 @@
 package view;
 
-import java.io.IOException;
-
-import javax.swing.SwingUtilities;
+import javax.swing.JFrame;
 
 import controller.InscricaoController;
 import model.dto.Candidatura;
@@ -11,25 +9,8 @@ import view.GenericFormDialog.FormMode;
 
 public class InscricaoView extends GenericCrudView<Candidatura, Integer, InscricaoController> {
 
-    public InscricaoView(String titulo, String[] colunas, InscricaoController controller) {
-        super(titulo, colunas, controller);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            
-            try {
-                InscricaoController controller = new InscricaoController();
-                String titulo = "Inscrições";
-                String[] colunas = {"ID","Inscrito", "Código do processo", "Disciplina"};
-                InscricaoView tela = new InscricaoView(titulo, colunas, controller);
-                tela.setVisible(true);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            
-        });
+    public InscricaoView(JFrame parent, String titulo, String[] colunas, InscricaoController controller) {
+        super(parent, titulo, colunas, controller);
     }
 
     @Override

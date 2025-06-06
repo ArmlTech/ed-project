@@ -13,7 +13,7 @@ public class DisciplinaController implements IGenericController<Disciplina, Inte
     private final DisciplinaService service;
     private final CursoService cursoService;
 
-    public DisciplinaController() throws IOException{
+    public DisciplinaController() {
         service = new DisciplinaService();
         cursoService = new CursoService();
     }

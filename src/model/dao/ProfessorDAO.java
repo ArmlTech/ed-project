@@ -16,6 +16,7 @@ public class ProfessorDAO implements IGenericDAO<Professor, Integer> {
 		CsvUtils.adicionarLinhaCSV(caminhoArquivo, toCSV(professor));
 	}
 
+<<<<<<< HEAD
 	@Override
 	public Pilha<Professor> buscarTodos() throws Exception {
 
@@ -32,6 +33,11 @@ public class ProfessorDAO implements IGenericDAO<Professor, Integer> {
             professores.push(professor);
         }
         return professores;
+=======
+
+    public ProfessorDAO() {
+        super("professores.csv");
+>>>>>>> 3ddcbb4 (feat: criação da main com abertura de telas dinamicas)
     }
     
     @Override
@@ -105,4 +111,28 @@ public class ProfessorDAO implements IGenericDAO<Professor, Integer> {
         throw new Exception("Professor não encontrado");
     }
 
+<<<<<<< HEAD
 }
+=======
+    @Override
+    protected String entityToCSV(Professor entidade) {
+        return 
+            entidade.getId() + ";" +
+            entidade.getCpf() + ';' + 
+            entidade.getNome() + ';' + 
+            entidade.getQtdPontos() + ";" + 
+            entidade.getAreaID();
+    }
+
+    @Override
+    protected Professor csvToEntity(String[] dados) {
+        Integer id = Integer.parseInt(dados[0]);
+        String cpf = dados[1];
+        String nome = dados[2];
+        Float qtdPontos = Float.parseFloat(dados[3]);
+        Integer areaID = Integer.parseInt(dados[4]);
+        return new Professor(id, cpf, nome, qtdPontos, areaID);
+    }
+
+ }
+>>>>>>> 3ddcbb4 (feat: criação da main com abertura de telas dinamicas)
