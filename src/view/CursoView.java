@@ -1,6 +1,6 @@
 package view;
 
-import controller.*;w
+import controller.*;
 
 import javax.swing.JFrame;
 
