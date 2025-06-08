@@ -1,7 +1,5 @@
 package model.dao;
 
-import java.io.IOException;
-
 import br.edu.fateczl.Fila;
 import model.dto.Professor;
 

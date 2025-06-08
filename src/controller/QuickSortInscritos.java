@@ -37,24 +37,14 @@ public class QuickSortInscritos {
 	}
 
 
-	private static void trocar(Lista<InscritoDisplay> lista, int i, int j) {
+	private static void trocar(Lista<InscritoDisplay> lista, int i, int j) throws Exception {
+		InscritoDisplay aux = lista.get(i);
 		
-
+		lista.add(lista.get(j), i);
+		lista.remove(i+1);
 		
-		try {
-			InscritoDisplay aux = lista.get(i);
-			
-			lista.add(lista.get(j), i);
-			lista.remove(i+1);
-			
-			lista.add(aux, j);
-			lista.remove(j+1);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+		lista.add(aux, j);
+		lista.remove(j+1);
 		
 	}
 
