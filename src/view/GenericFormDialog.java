@@ -26,11 +26,12 @@ public abstract class GenericFormDialog<T, ID, C extends IGenericCrudController<
     protected FormMode currentFormMode;
 
     //campos
-	protected JButton btnSalvar = new JButton("Salvar");
-	protected JButton btnLimpar = new JButton("Limpar");
-	protected JButton btnCancelar = new JButton("Cancelar");
-	protected JButton btnDeletar = new JButton("Deletar");
-	protected JButton btnHabilitarEdicao = new JButton("Habilitar edição");
+	private JButton btnSalvar = new JButton("Salvar");
+	private JButton btnLimpar = new JButton("Limpar");
+	private JButton btnCancelar = new JButton("Cancelar");
+	private JButton btnDeletar = new JButton("Deletar");
+	private JButton btnHabilitarEdicao = new JButton("Habilitar edição");
+    private JPanel botoes;
     
 	public GenericFormDialog(String titulo, C controller, JFrame parent, Runnable onSuccess, FormMode mode, T entidade) {
         //travar a tela de cadastro em relação ao parent até que seja fechada
@@ -48,15 +49,14 @@ public abstract class GenericFormDialog<T, ID, C extends IGenericCrudController<
         formPanel.setBorder(new EmptyBorder(20, 30, 20, 30));
         add(formPanel, BorderLayout.CENTER);
 
-        JPanel botoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        botoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         botoes.add(btnSalvar);
         botoes.add(btnCancelar);
         botoes.add(btnLimpar);
         botoes.add(btnDeletar);
         botoes.add(btnHabilitarEdicao);
-        
         add(botoes, BorderLayout.SOUTH);
-
+        //setPreferredSize(getToolkit().getScreenSize());
         setFormButtonsProps(currentFormMode);
         setupListeners(onSuccess);
 
@@ -110,6 +110,7 @@ public abstract class GenericFormDialog<T, ID, C extends IGenericCrudController<
             habilitarCamposPorModo(currentFormMode);
             revalidate();
             repaint();
+            GenericFormDialog.this.pack();
         });
 
         btnDeletar.addActionListener(e -> {
