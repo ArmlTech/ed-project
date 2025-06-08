@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -14,7 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.fateczl.Fila;
-import controller.IGenericController;
+import controller.IGenericCrudController;
 import util.Alerta;
 
 //Classe genérica abstrata que representa uma tela principal baseada em JFrame.
@@ -24,7 +23,7 @@ import util.Alerta;
 //implementa a interface CrudController, com operações básicas de CRUD sobre o tipo T e identificador do tipo ID.
 //Isso permite reaproveitar o código para diferentes entidades e controladores,
 //garantindo que todos tenham as operações necessárias implementadas.
-public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>> extends JFrame {
+public abstract class GenericCrudView<T, ID, C extends IGenericCrudController<T, ID>> extends JFrame {
     private static final long serialVersionUID = 1L;
     protected JPanel contentPane;                  // Painel principal onde serão colocados componentes
     protected DefaultTableModel tableModel;         // Modelo da Tabela JTable
@@ -37,7 +36,6 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
     protected JButton btnNovo = new JButton("Cadastrar novo");
     protected JButton btnExibir = new JButton("Exibir detalhes");
     protected JButton btnCancelarSelecao = new JButton("Cancelar seleção");
-    
 
     // Construtor: recebe título da janela, colunas da tabela e o controlador
     public GenericCrudView(JFrame parent, String titulo, String[] colunas, C controller) {
@@ -53,7 +51,7 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
         contentPane = new JPanel();                 // Cria o painel principal de conteúdo
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5)); // Margens internas
         setContentPane(contentPane);                // Seta o painel como content pane da janela
-        
+
         // Configura a tabela de dados
         tableModel = new DefaultTableModel(colunas, 0){
             @Override
@@ -66,8 +64,6 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
         add(new JScrollPane(table), BorderLayout.WEST); // Adiciona a tabela em um JScrollPane ao centro
         carregarTabela();                           // Popula a tabela com dados iniciais
 
-
-        
         opcoesItemSelecionado = new JPanel();
         opcoesItemSelecionado.setLayout(new BoxLayout(opcoesItemSelecionado, BoxLayout.Y_AXIS));
         opcoesItemSelecionado.setBorder(new EmptyBorder(30, 20, 30, 20));
@@ -94,26 +90,24 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
         btnExibir.addActionListener(e -> exibirDetalhesDialog(idEntidadeSelecionada));
         btnCancelarSelecao.addActionListener(e -> cancelarSelecao());
         btnNovo.addActionListener(e -> abrirTelaCadastro());
-        
+
         contentPane.add(opcoesItemSelecionado, BorderLayout.EAST);                   // Adiciona o botão ao painel principal
-    
-        if (parent != null) {
-    parent.setEnabled(false); // trava a janela principal
-}
 
-    addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowClosed(java.awt.event.WindowEvent e) {
-            if (parent != null) {
-                parent.setEnabled(true); // destrava a janela principal
-                parent.toFront(); // traz a janela principal de volta
+        if (parent != null) parent.setEnabled(false);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                if (parent != null) {
+                    parent.setEnabled(true); // destrava a janela principal
+                    parent.toFront(); // traz a janela principal de volta
+                }
             }
-        }
-    });
+        });
 
-    }
-    
-    private void ocultarColunaID(int id) {
+    }//fimconstrutor
+
+    protected void ocultarColunaID(int id) {
         var colunaID = table.getColumnModel().getColumn(id);
         colunaID.setMinWidth(0);
         colunaID.setMaxWidth(0);
@@ -132,8 +126,6 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
         opcoesItemSelecionado.repaint();
     }
 
-
- 
     // Método que limpa e recarrega a tabela com dados obtidos via buscarEntidades()
     protected void carregarTabela() {
         tableModel.setRowCount(0);                  // Remove todas as linhas atuais
@@ -149,8 +141,6 @@ public abstract class GenericCrudView<T, ID, C extends IGenericController<T, ID>
         ocultarColunaID(0);
     }
 
-    
-    
     // Método abstrato para converter cada entidade em uma linha do tipo aceitado pela tableModel (Object[])
     protected abstract Object[] extrairLinha(T entidade) throws Exception;
     protected abstract void exibirDetalhesDialog(ID id);

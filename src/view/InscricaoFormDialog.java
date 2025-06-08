@@ -13,12 +13,13 @@ import br.edu.fateczl.Lista;
 import controller.InscricaoController;
 import model.dto.Candidatura;
 import model.dto.Processo;
+import model.dto.ProcessoDisplay;
 import model.dto.Professor;
 import util.Alerta;
 
 public class InscricaoFormDialog extends GenericFormDialog<Candidatura, Integer, InscricaoController> {
     private JComboBox<Professor> comboProfessor;
-    private JComboBox<Processo> comboProcesso;
+    private JComboBox<ProcessoDisplay> comboProcesso;
     private JTextField txtID;
     private JLabel lblID;
 
@@ -40,9 +41,9 @@ public class InscricaoFormDialog extends GenericFormDialog<Candidatura, Integer,
 
         painel.add(new JLabel("Processo:"));      
         comboProcesso = new JComboBox<>();
-        comboProcesso.addItem(new Processo(-1, false, 0));
+        comboProcesso.addItem(new ProcessoDisplay(-1, "Selecione"));
         try {
-            Fila<Processo> processos = controller.buscarTodosProcessos();
+            Fila<ProcessoDisplay> processos = controller.buscarTodosProcessos();
             while(!processos.isEmpty()) {
                 comboProcesso.addItem(processos.remove());
             }
@@ -73,40 +74,32 @@ public class InscricaoFormDialog extends GenericFormDialog<Candidatura, Integer,
         Boolean enabled = currentFormMode == FormMode.EDIT || currentFormMode == FormMode.CREATE;
         lblID.setVisible(currentFormMode == FormMode.VIEW || currentFormMode == FormMode.EDIT);
         txtID.setVisible(currentFormMode == FormMode.VIEW || currentFormMode == FormMode.EDIT);
-        comboProfessor.setEnabled(enabled);
+        comboProfessor.setEnabled(currentFormMode == FormMode.CREATE);
         comboProcesso.setEnabled(enabled);
     }
 
     @Override
     protected void preencherDadosCampos(FormMode currentFormMode, Candidatura entidade) {
-        
-        switch(currentFormMode){
-            case CREATE:
-                limparFormulario();
-            case EDIT:
-            
-                break;
-            case VIEW:
-                Candidatura candidatura;
-                try {
-                    candidatura = controller.buscarPorID(entidade.getId());
-                    txtID.setText(Integer.toString(candidatura.getId()));
-                    comboProcesso.setSelectedItem(controller.buscarProcessoPorId(candidatura.getIdProcesso()));
-                    comboProfessor.setSelectedItem(controller.buscarProfessorPorId(candidatura.getIdProfessor()));
-                } catch (Exception e) {
-                    Alerta.erro(this, e);
-                }
-            default:
-                break;
-            
+
+        if ((currentFormMode == FormMode.VIEW)) {
+            try {
+                txtID.setText(Integer.toString(entidade.getId()));
+                comboProcesso.setSelectedItem(controller.buscarProcessoDisplayPorId(entidade.getIdProcesso()));
+                comboProfessor.setSelectedItem(controller.buscarProfessorPorId(entidade.getIdProfessor()));
+            } catch (Exception e) {
+                Alerta.erro(this, e);
+            }
+        } else if (currentFormMode == FormMode.CREATE){
+            limparFormulario();
         }
+        
     }
 
     @Override
     protected Lista<String> getDadosInput() {
         Lista<String> dadosInput = new Lista<>();
         try {
-            dadosInput.addLast(Integer.toString(((Processo) comboProcesso.getSelectedItem()).getId()));
+            dadosInput.addLast(Integer.toString(((ProcessoDisplay) comboProcesso.getSelectedItem()).getId()));
             dadosInput.addLast(Integer.toString(((Professor) comboProfessor.getSelectedItem()).getId()));
         } catch (Exception e) {
             Alerta.erro(this, e);

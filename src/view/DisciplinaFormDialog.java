@@ -85,28 +85,20 @@ public class DisciplinaFormDialog extends GenericFormDialog<Disciplina, Integer,
 
     @Override
     protected void preencherDadosCampos(FormMode currentFormMode, Disciplina entidade) {
-        switch(currentFormMode){
-            case CREATE:
-                limparFormulario();
-            case EDIT:
-            
-                break;
-            case VIEW:
-                Disciplina disciplina;
-                try {
-                    disciplina = controller.buscarPorID(entidade.getId());
-                    txtID.setText(Integer.toString(disciplina.getId()));
-                    txtNome.setText(disciplina.getNome());
-                    txtDiaSemana.setText(disciplina.getDiaSemana());
-                    txtHoraInicial.setText(disciplina.getHoraInicial());
-                    txtQtdHoras.setText(Double.toString(disciplina.getQtdHoras()));
-                    comboCurso.setSelectedItem(controller.buscarCursoPorId(disciplina.getIdCurso()));
+
+        if ((currentFormMode == FormMode.VIEW)) {
+            try {
+                txtID.setText(Integer.toString(entidade.getId()));
+                txtNome.setText(entidade.getNome());
+                txtDiaSemana.setText(entidade.getDiaSemana());
+                txtHoraInicial.setText(entidade.getHoraInicial());
+                txtQtdHoras.setText(Double.toString(entidade.getQtdHoras()));
+                comboCurso.setSelectedItem(controller.buscarCursoPorId(entidade.getIdCurso()));
                 } catch (Exception e) {
                     Alerta.erro(DisciplinaFormDialog.this, e);
                 }
-            default:
-                break;
-            
+        } else if (currentFormMode == FormMode.CREATE){
+            limparFormulario();
         }
     }
 

@@ -3,7 +3,7 @@ package controller;
 import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
 
-public interface IGenericController<T, ID> {
+public interface IGenericCrudController<T, ID> {
 	
 	void salvar(T entidade) throws Exception;
 	Fila<T> buscarTodos() throws Exception;

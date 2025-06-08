@@ -2,17 +2,31 @@ package view;
 import javax.swing.JFrame;
 import controller.AreaConhecimentoController;
 import model.dto.AreaConhecimento;
+import util.Alerta;
+import view.GenericFormDialog.FormMode;
 
 public class AreaConhecimentoView extends GenericCrudView<AreaConhecimento, Integer, AreaConhecimentoController> {
 
 	private static final long serialVersionUID = 1L;
-	public AreaConhecimentoView(JFrame parent, String titulo, String[] colunas, AreaConhecimentoController controller) {
+	
+	private final static String titulo = "Gerenciar Áreas de Conhecimento";
+	private final static String[] colunas = { "ID", "Nome" };
+	private final static AreaConhecimentoController controller = new AreaConhecimentoController();
+	
+	public AreaConhecimentoView(JFrame parent) {
 		super(parent, titulo, colunas, controller);
 	}
 
 	@Override
 	protected void abrirTelaCadastro() {
-		// TODO Auto-generated method stub
+		AreaConhecimentoFormDialog dialog = new AreaConhecimentoFormDialog(
+				"Gerenciar Área de Conhecimento",
+				controller,
+				this,
+				() -> carregarTabela(),
+				FormMode.CREATE,
+				null);
+		dialog.setVisible(true);
 	}
 
 	@Override
@@ -22,14 +36,29 @@ public class AreaConhecimentoView extends GenericCrudView<AreaConhecimento, Inte
 
 	@Override
 	protected void exibirDetalhesDialog(Integer id) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'exibirDetalhesDialog'");
+		try {
+			AreaConhecimentoFormDialog dialog = new AreaConhecimentoFormDialog(
+					"Gerenciar Área de Conhecimento",
+					controller,
+					this,
+					() -> carregarTabela(),
+					FormMode.VIEW,
+					controller.buscarPorID(id));
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			Alerta.erro(this, e);
+		}
 	}
 
 	@Override
 	protected String getLabelTextEntidadeSelecionada(Integer id) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getLabelTextEntidadeSelecionada'");
+		try {
+			AreaConhecimento area = controller.buscarPorID(id);
+			return "<html><html><div style='width:150px;'>ID: " + area.getId() + "<br>" +
+					"Nome: " + area.getNome() + "</html></div>";
+		} catch (Exception e) {
+			return "Erro: " + e.getMessage();
+		}
 	}
 
 

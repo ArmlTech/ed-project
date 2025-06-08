@@ -1,7 +1,5 @@
 package service;
 
-import java.io.IOException;
-
 import model.dao.AreaConhecimentoDAO;
 import model.dto.AreaConhecimento;
 

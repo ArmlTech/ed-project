@@ -1,7 +1,5 @@
 package controller;
 
-import java.io.IOException;
-
 import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
 import model.dto.Curso;
@@ -9,7 +7,7 @@ import model.dto.Disciplina;
 import service.CursoService;
 import service.DisciplinaService;
 
-public class DisciplinaController implements IGenericController<Disciplina, Integer> {
+public class DisciplinaController implements IGenericCrudController<Disciplina, Integer> {
     private final DisciplinaService service;
     private final CursoService cursoService;
 
@@ -53,7 +51,6 @@ public class DisciplinaController implements IGenericController<Disciplina, Inte
 
     @Override
     public Disciplina criarEntidade(Disciplina entidade, Lista<String> dadosInput) throws Exception {
-
         for(int i = 0, length = dadosInput.size(); i < length; i++){
 			if(dadosInput.get(i).isBlank()){
 				throw new Exception("Preencha todos os campos");
@@ -74,7 +71,6 @@ public class DisciplinaController implements IGenericController<Disciplina, Inte
         }
 
 		Disciplina disciplina = new Disciplina(id, nome, diaSemana, horaInicial, qtdHoras, idCurso);
-        
         return disciplina;
     }
 

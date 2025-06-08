@@ -10,10 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import br.edu.fateczl.Lista;
-import controller.IGenericController;
+import controller.IGenericCrudController;
 import util.Alerta;
 
-public abstract class GenericFormDialog<T, ID, C extends IGenericController<T, ID>> extends JDialog {
+public abstract class GenericFormDialog<T, ID, C extends IGenericCrudController<T, ID>> extends JDialog {
 
     protected enum FormMode{
         CREATE,

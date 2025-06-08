@@ -2,12 +2,12 @@ package model.dto;
 
 public class Processo implements IGenericEntity {
 	private Integer id;
-	private boolean status;
+	private boolean aberto;
 	private Integer idDisciplina;
 
-	public Processo(Integer id, boolean status, Integer idDisciplina) {
+	public Processo(Integer id, boolean aberto, Integer idDisciplina) {
 		this.id = id;
-		this.status = status;
+		this.aberto = aberto;
 		this.idDisciplina = idDisciplina;
 	}
 
@@ -19,12 +19,12 @@ public class Processo implements IGenericEntity {
 		this.id = id;
 	}
 
-	public boolean isStatus() {
-		return status;
+	public boolean isAberto() {
+		return aberto;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setAberto(boolean aberto) {
+		this.aberto = aberto;
 	}
 
 	public Integer getIdDisciplina() {
@@ -39,7 +39,7 @@ public class Processo implements IGenericEntity {
 	public String toString() {
 		return "Processo{" +
 				"id=" + id +
-				", status=" + status +
+				", status=" + aberto +
 				", idDisciplina=" + idDisciplina +
 				'}';
 	}

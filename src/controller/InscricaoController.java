@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -9,13 +8,14 @@ import br.edu.fateczl.Lista;
 import model.dto.Candidatura;
 import model.dto.Disciplina;
 import model.dto.Processo;
+import model.dto.ProcessoDisplay;
 import model.dto.Professor;
 import service.InscricaoService;
 import service.ProcessoService;
 import service.ProfessorService;
 
 
-public class InscricaoController implements IGenericController<Candidatura, Integer> {
+public class InscricaoController implements IGenericCrudController<Candidatura, Integer> {
 
     private final InscricaoService service;
     private final ProfessorService profService;
@@ -61,8 +61,8 @@ public class InscricaoController implements IGenericController<Candidatura, Inte
         }
 
         Integer id = (entidade == null) ? 0 : entidade.getId();
-        Integer idProfessor = Integer.parseInt(dadosInput.get(0));
         Integer idProcesso = Integer.parseInt(dadosInput.get(1));
+        Integer idProfessor = Integer.parseInt(dadosInput.get(0));
         if(dadosInput.size() > 2){
             LocalDate data = LocalDate.parse(dadosInput.get(2), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             return new Candidatura(id, idProfessor, idProcesso, data);
@@ -83,15 +83,31 @@ public class InscricaoController implements IGenericController<Candidatura, Inte
        return profService.buscarTodos();
     }
 
-    public Fila<Processo> buscarTodosProcessos() throws Exception {
-        return processoService.buscarTodos();
+    public Fila<ProcessoDisplay> buscarTodosProcessos() throws Exception {
+        Fila<Processo> processos = processoService.buscarTodos();
+        Lista<Disciplina> disciplinas = processoService.buscarTodasDisciplinas();
+        Fila<ProcessoDisplay> processosComDisciplinas = new Fila<>();
+        while (!processos.isEmpty()) {
+            Processo processo = processos.remove();
+            for(int i = 0; i < disciplinas.size(); i++) {
+                Disciplina disciplina = disciplinas.get(i);
+                if (disciplina.getId().equals(processo.getIdDisciplina())) {
+                    ProcessoDisplay processoDisplay = new ProcessoDisplay(processo.getId(), disciplina.getNome());
+                    processosComDisciplinas.insert(processoDisplay);
+                    break;
+                }
+            }
+        }
+        return processosComDisciplinas;
+    }
+
+    public ProcessoDisplay buscarProcessoDisplayPorId(Integer idProcesso) throws Exception {
+        String nomeDisciplina = processoService.buscarNomeDisciplina(idProcesso);
+        return new ProcessoDisplay(idProcesso, nomeDisciplina);
     }
 
     public Disciplina buscarDisciplinaPorId(Integer idProcesso) throws Exception {
         return processoService.buscarDisciplinaPorId(idProcesso);
     }
 
-    public Object buscarProcessoPorId(Integer idProcesso) throws Exception {
-        return processoService.buscarPorID(idProcesso);
-    }
 }

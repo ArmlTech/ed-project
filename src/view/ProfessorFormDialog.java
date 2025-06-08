@@ -85,7 +85,7 @@ public class ProfessorFormDialog extends GenericFormDialog<Professor, Integer, P
 
     @Override
     protected void habilitarCamposPorModo(FormMode currentFormMode) {
-        Boolean enabled = (currentFormMode == FormMode.CREATE || currentFormMode == FormMode.EDIT);
+        boolean enabled = (currentFormMode == FormMode.CREATE || currentFormMode == FormMode.EDIT);
         txtCPF.setEnabled(currentFormMode == FormMode.CREATE);
         txtNome.setEnabled(enabled);
         txtQtdPontos.setEnabled(enabled);
@@ -95,29 +95,18 @@ public class ProfessorFormDialog extends GenericFormDialog<Professor, Integer, P
     @Override
     protected void preencherDadosCampos(FormMode currentFormMode, Professor entidade) {
         
-
-        switch(currentFormMode){
-            case CREATE:
-                limparFormulario();
-            case EDIT:
-            
-                break;
-            case VIEW:
-                Professor professor;
-                try {
-                    professor = controller.buscarPorID(entidade.getId());
-                    txtCPF.setText(professor.getCpf());
-                    txtNome.setText(professor.getNome());
-                    txtQtdPontos.setText(Float.toString(professor.getQtdPontos()));
-                    comboArea.setSelectedItem(controller.buscarAreaPorId(professor.getAreaID()));
-                } catch (Exception e) {
-                    Alerta.erro(ProfessorFormDialog.this, e);
-                }
-            default:
-                break;
-            
+        if (currentFormMode == FormMode.VIEW) {
+            try {
+                txtCPF.setText(entidade.getCpf());
+                txtNome.setText(entidade.getNome());
+                txtQtdPontos.setText(Float.toString(entidade.getQtdPontos()));
+                comboArea.setSelectedItem(controller.buscarAreaPorId(entidade.getAreaID()));
+            } catch (Exception e) {
+                Alerta.erro(ProfessorFormDialog.this, e);
+            }
+        } else if (currentFormMode == FormMode.CREATE){
+            limparFormulario();
         }
-
     }
 
 }

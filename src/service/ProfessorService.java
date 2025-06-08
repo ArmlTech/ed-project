@@ -1,5 +1,4 @@
 package service;
-import java.io.IOException;
 
 import model.dao.ProfessorDAO;
 import model.dto.Professor;

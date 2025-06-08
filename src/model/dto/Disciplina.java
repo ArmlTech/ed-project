@@ -55,8 +55,19 @@ public class Disciplina implements IGenericEntity {
 	}
 	@Override
 	public String toString() {
-		return "Disciplina [id=" + id + ", nome=" + nome + ", diaSemana=" + diaSemana + ", horaInicial=" + horaInicial
-				+ ", qtdHoras=" + qtdHoras + ", idCurso=" + idCurso + "]";
+		return nome;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!(obj instanceof Disciplina)) return false;
+		Disciplina disciplina = (Disciplina) obj;
+		return id != null && id.equals(disciplina.id);
+	}
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
 	}
 
 	

@@ -1,7 +1,5 @@
 package controller;
 
-import java.io.IOException;
-
 import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
 import model.dto.AreaConhecimento;
@@ -9,7 +7,7 @@ import model.dto.Professor;
 import service.AreaConhecimentoService;
 import service.ProfessorService;
 
-public class ProfessorController implements IGenericController<Professor, Integer>{
+public class ProfessorController implements IGenericCrudController<Professor, Integer>{
 
     private final ProfessorService service;
     private final AreaConhecimentoService areaService;
@@ -58,14 +56,11 @@ public class ProfessorController implements IGenericController<Professor, Intege
 
 	@Override
 	public Professor criarEntidade(Professor entidade, Lista<String> dadosInput) throws Exception {
-
 		for(int i = 0, length = dadosInput.size(); i < length; i++){
 			if(dadosInput.get(i).isBlank()){
 				throw new Exception("Preencha todos os campos");
 			}
 		}
-
-		//TODO fazer lógica de verificação CPF aqui ou na service
 
 		Integer id = (entidade == null) ? 0 : entidade.getId();
 		String cpf = dadosInput.get(0);

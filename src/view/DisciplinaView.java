@@ -9,7 +9,15 @@ import view.GenericFormDialog.FormMode;
 
 public class DisciplinaView extends GenericCrudView<Disciplina, Integer, DisciplinaController> {
 
-    public DisciplinaView(JFrame parent, String titulo, String[] colunas, DisciplinaController controller) {
+    private static final long serialVersionUID = 1L;
+
+    private final static String titulo = "Gerenciar Disciplinas";
+    private final static String[] colunas = {
+        "ID", "Nome", "Dia da Semana", "Hora Inicial", "Quantidade de Horas", "Curso"
+    };
+    private final static DisciplinaController controller = new DisciplinaController();
+
+    public DisciplinaView(JFrame parent) {
         super(parent, titulo, colunas, controller);
     }
 
@@ -63,7 +71,7 @@ public class DisciplinaView extends GenericCrudView<Disciplina, Integer, Discipl
     protected String getLabelTextEntidadeSelecionada(Integer id) {
         try {
             Disciplina disciplina = controller.buscarPorID(id);
-            return "<html>ID: " + disciplina.getId() + " <br> Nome: " + disciplina.getNome() + "</html>";
+            return "<html><html><div style='width:150px;'>ID: " + disciplina.getId() + " <br> Nome: " + disciplina.getNome() + "</div></html>";
         } catch (Exception e) {
             return "Erro: " + e.getMessage();
         }

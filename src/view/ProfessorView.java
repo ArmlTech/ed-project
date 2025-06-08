@@ -1,8 +1,8 @@
 // Implementação concreta para Professores, usando a estrutura genérica
 package view;
 
-
 import javax.swing.JFrame;
+
 import controller.ProfessorController;
 import model.dto.Professor;
 import util.Alerta;
@@ -11,13 +11,18 @@ import view.GenericFormDialog.FormMode;
 //Define que essa classe herda a classe genérica, e dá o tipo de entidiade Professor
 // e o tipo do controlador CrudController<Professor>
 public class ProfessorView extends GenericCrudView<Professor, Integer, ProfessorController> {
+    
     private static final long serialVersionUID = 1L;
 
-    // Construtor passa título, colunas e controlador para a superclasse (classe mãe)
-    public ProfessorView(JFrame parent, String titulo, String[] colunas, ProfessorController controller) {
+    private final static String titulo = "Gerenciar Professores"; // Título da janela
+    private final static String[] colunas = { // Colunas da tabela
+        "ID", "CPF", "Nome", "Quantidade de Pontos", "Área de Conhecimento"
+    };
+    private final static ProfessorController controller = new ProfessorController(); // Controlador específico para Professores
+    
+    public ProfessorView(JFrame parent) {
         super(parent, titulo, colunas, controller); //constrói a classe mãe a partir do seu construtor
     }
-    
     // Converte cada Professor em um array de objetos para exibição na tabela
     @Override
     protected Object[] extrairLinha(Professor entidade) throws Exception {
@@ -66,7 +71,7 @@ public class ProfessorView extends GenericCrudView<Professor, Integer, Professor
         
         try {
             Professor professor = controller.buscarPorID(id);
-            return "<html>CPF: " + professor.getCpf() + "<br>Nome: " + professor.getNome() + "</html>";
+            return "<html><html><div style='width:150px;'>CPF: " + professor.getCpf() + "<br>Nome: " + professor.getNome() + "</div></html>";
         } catch (Exception e) {
             return "Erro: " + e.getMessage();
         }

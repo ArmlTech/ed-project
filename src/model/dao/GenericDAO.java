@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
 import model.dto.IGenericEntity;
+import util.Alerta;
 import util.CsvUtils;
 
 public abstract class GenericDAO<T extends IGenericEntity, ID>{
@@ -26,25 +27,28 @@ public abstract class GenericDAO<T extends IGenericEntity, ID>{
         try {
             Files.createDirectories(diretorio);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Alerta.erro(e);
         }
         
         return diretorio.resolve(nomeArquivoCSV).toString();
     }
 
     public void salvar(T entidade) throws Exception {
-        int maiorId = 0;
+        entidade.setId(generateNewId());
+        CsvUtils.adicionarLinhaCSV(caminhoArquivo, entityToCSV(entidade));
+    }
+
+    private Integer generateNewId() throws Exception {
         Fila<T> entidades = buscarTodos();
-        while(!entidades.isEmpty()) {
-            T e = entidades.remove();
-            if (e.getId() > maiorId) {
-                maiorId = e.getId();
+        Integer maiorId = 0;
+
+        while (!entidades.isEmpty()) {
+            T entidade = entidades.remove();
+            if (entidade.getId() > maiorId) {
+                maiorId = entidade.getId();
             }
         }
-        entidade.setId(maiorId + 1);
-
-        CsvUtils.adicionarLinhaCSV(caminhoArquivo, entityToCSV(entidade));
+        return maiorId+1;
     }
 
     public Fila<T> buscarTodos() throws Exception {
@@ -58,6 +62,8 @@ public abstract class GenericDAO<T extends IGenericEntity, ID>{
         return entidades;
     }
 
+
+    //Atualização e remoção usam listas encadeadas, sem deixar linhas vazias no CSV
     public void atualizar(T entidadeAtualizada) throws Exception {
         Fila<T> entidades = buscarTodos();
         Lista<String> entidadesCSV = new Lista<>();
@@ -73,6 +79,7 @@ public abstract class GenericDAO<T extends IGenericEntity, ID>{
         CsvUtils.escreverCSV(caminhoArquivo, entidadesCSV);
     }
 
+    //Atualização e remoção usam listas encadeadas, sem deixar linhas vazias no CSV
     public void excluir(Integer id) throws Exception {
         Fila<T> entidades = buscarTodos();
         Lista<String> entidadesCSV = new Lista<>();

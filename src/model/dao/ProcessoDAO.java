@@ -1,5 +1,4 @@
 package model.dao;
-import java.io.IOException;
 
 import model.dto.Processo;
 
@@ -12,7 +11,7 @@ public class ProcessoDAO extends GenericDAO<Processo, Integer> {
     @Override
     protected String entityToCSV(Processo entidade) {
         return entidade.getId() + ";" +
-                (entidade.isStatus() ? "1" : "0") + ";" +
+                (entidade.isAberto() ? "1" : "0") + ";" +
                 entidade.getIdDisciplina();
     }
 

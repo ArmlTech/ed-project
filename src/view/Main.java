@@ -2,13 +2,7 @@ package view;
 
 import javax.swing.*;
 
-import controller.AreaConhecimentoController;
-import controller.DisciplinaController;
-import controller.IGenericController;
-import controller.InscricaoController;
-import controller.ProfessorController;
 import util.Alerta;
-
 import java.awt.*;
 
 public class Main extends JFrame {
@@ -21,6 +15,7 @@ public class Main extends JFrame {
     JButton btnCurso;
     JButton btnInscricao;
     JButton btnInscrito;
+    JButton btnProcesso;
     JButton btnSair;
     
     public Main() {
@@ -38,7 +33,8 @@ public class Main extends JFrame {
         btnDisciplina = new JButton("Gerenciar Disciplinas");
         btnCurso = new JButton("Gerenciar Cursos");
         btnInscricao = new JButton("Gerenciar Inscrições");
-        btnInscrito = new JButton("Gerenciar Inscritos");
+        btnInscrito = new JButton("Consultar Inscritos");
+        btnProcesso = new JButton("Gerenciar Processos");
         btnSair = new JButton("Sair");
         
         initListeners();
@@ -49,54 +45,41 @@ public class Main extends JFrame {
         panel.add(btnCurso);
         panel.add(btnInscricao);
         panel.add(btnInscrito);
+        panel.add(btnProcesso);
         panel.add(btnSair);
         
         add(panel);
     }
     
     private void initListeners(){
-        btnProfessor.addActionListener(e -> abrirCrudGenerico(
-        new ProfessorController(),
-        "Professores",
-        new String[]{"ID", "CPF", "Nome", "Pontos", "Área do conhecimento"},
-        ProfessorView.class
-        ));
-        
-        btnAreaConhecimento.addActionListener(e -> abrirCrudGenerico(
-        new AreaConhecimentoController(),
-        "Áreas de Conhecimento",
-        new String[]{"ID", "Nome"},
-        AreaConhecimentoView.class
-        ));
-        
-        btnDisciplina.addActionListener(e -> abrirCrudGenerico(
-        new DisciplinaController(),
-        "Disciplinas",
-        new String[]{"ID","Nome", "Dia da semana", "Hora inicial", "Qtd. de horas", "Curso"},
-        DisciplinaView.class
-        ));
-        
-        btnInscricao.addActionListener(e -> abrirCrudGenerico(
-        new InscricaoController(),
-        "Inscrições",
-        new String[]{"ID","Inscrito", "Código do processo", "Disciplina"},
-        InscricaoView.class
-        ));
-        
+        btnProfessor.addActionListener(e -> abrirCrudGenerico(ProfessorView.class));
+        btnAreaConhecimento.addActionListener(e -> abrirCrudGenerico(AreaConhecimentoView.class));
+        btnDisciplina.addActionListener(e -> abrirCrudGenerico(DisciplinaView.class));
+        btnCurso.addActionListener(e -> abrirCrudGenerico(CursoView.class));
+        btnInscricao.addActionListener(e -> abrirCrudGenerico(InscricaoView.class));
+        btnInscrito.addActionListener(e -> abrirCrudGenerico(InscritosView.class));
+        btnProcesso.addActionListener(e -> abrirCrudGenerico(ProcessoView.class));
         btnSair.addActionListener(e -> dispose());
     }
     
-    private void abrirCrudGenerico(IGenericController<?, Integer> controller, String titulo, String[] colunas, Class<? extends JFrame> viewClass) {
+    private void abrirCrudGenerico(Class<? extends JFrame> viewClass) {
         try {
-            JFrame janela = viewClass
-            .getConstructor(JFrame.class, String.class, String[].class, controller.getClass())
-            .newInstance(this, titulo, colunas, controller);
-            janela.setVisible(true);
+            SwingUtilities.invokeLater(() -> {
+                try {
+                        JFrame janela = viewClass
+                    .getConstructor(JFrame.class)
+                    .newInstance(this);
+                    janela.setVisible(true);
+                } catch (Exception e) {
+                    Alerta.erro(null, "Erro ao abrir a janela: " + e.getMessage());
+                }
+            });
         } catch (Exception e) {
-            Alerta.erro(null, "Erro ao iniciar a tela: " + e.getMessage());
+            Alerta.erro(null, "Erro ao abrir a janela: " + e.getMessage());
         }
+            
+
     }
-    
     
     
     public static void main(String[] args) {

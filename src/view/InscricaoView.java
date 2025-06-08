@@ -9,7 +9,15 @@ import view.GenericFormDialog.FormMode;
 
 public class InscricaoView extends GenericCrudView<Candidatura, Integer, InscricaoController> {
 
-    public InscricaoView(JFrame parent, String titulo, String[] colunas, InscricaoController controller) {
+    private static final long serialVersionUID = 1L;
+
+    private final static String titulo = "Gerenciar Inscrições";
+    private final static String[] colunas = {
+        "ID", "Professor", "Processo", "Disciplina"
+    };
+    private final static InscricaoController controller = new InscricaoController();
+
+    public InscricaoView(JFrame parent) {
         super(parent, titulo, colunas, controller);
     }
 
@@ -44,11 +52,11 @@ public class InscricaoView extends GenericCrudView<Candidatura, Integer, Inscric
     protected String getLabelTextEntidadeSelecionada(Integer id) {
         try {
             Candidatura candidatura = controller.buscarPorID(id);
-            return "<html>Inscrição ID: " + candidatura.getId() + 
+            return "<html><html><div style='width:150px;'>Inscrição ID: " + candidatura.getId() + 
                 "<br>Professor: " + controller.buscarProfessorPorId(candidatura.getIdProfessor()).getNome() +
                 "<br>Disciplina: " + controller.buscarDisciplinaProcesso(candidatura.getIdProcesso()) +
                 "<br>Processo: " + candidatura.getIdProcesso()
-            + "</html>";
+            + "</div></html>";
         } catch (Exception e) {
             return "Erro: " + e.getMessage();
         }

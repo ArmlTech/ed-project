@@ -4,36 +4,70 @@ import javax.swing.JFrame;
 
 import controller.CursoController;
 import model.dto.Curso;
+import util.Alerta;
+import view.GenericFormDialog.FormMode;
 
 public class CursoView extends GenericCrudView<Curso, Integer, CursoController> {
 
-    public CursoView(JFrame parent, String titulo, String[] colunas, CursoController controller) {
+    private static final long serialVersionUID = 1L;
+
+    private final static String titulo = "Gerenciar Cursos";
+    private final static String[] colunas = { "ID", "Nome", "Área de Conhecimento"};
+    private final static CursoController controller = new CursoController();
+
+    public CursoView(JFrame parent){
         super(parent, titulo, colunas, controller);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
     protected Object[] extrairLinha(Curso entidade) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'extrairLinha'");
+        return new Object[] {
+            entidade.getId(),
+            entidade.getNome(),
+            controller.buscarAreaPorId(entidade.getIdAreaConhecimento()).getNome()
+        };
     }
 
     @Override
     protected void exibirDetalhesDialog(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exibirDetalhesDialog'");
+        try {
+            CursoFormDialog dialog = new CursoFormDialog(
+                "Gerenciar curso", 
+                controller, 
+                this, 
+                () -> carregarTabela(), 
+                FormMode.VIEW, 
+                controller.buscarPorID(id));
+            dialog.setVisible(true);
+        } catch (Exception e) {
+            Alerta.erro(this, e);
+        }
     }
 
     @Override
     protected String getLabelTextEntidadeSelecionada(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getLabelTextEntidadeSelecionada'");
+        try {
+            Curso curso = controller.buscarPorID(id);
+            return  "<html><div style='width:150px;'>"  + curso.getId() + 
+                    "<br>Nome: " + curso.getNome() + 
+                    "<br>Área: " + 
+                    controller.buscarAreaPorId(curso.getIdAreaConhecimento()).getNome() + "</div></html>";
+        } catch (Exception e) {
+            return "Erro: " + e.getMessage();
+        }
     }
 
     @Override
     protected void abrirTelaCadastro() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'abrirTelaCadastro'");
+        CursoFormDialog dialog = 
+            new CursoFormDialog(
+                "Gerenciar curso", 
+                controller, 
+                this, 
+                () -> carregarTabela(), 
+                FormMode.CREATE, 
+                null);
+        dialog.setVisible(true);
     }
 
 }

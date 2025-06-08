@@ -18,6 +18,14 @@ public class InscricaoService extends GenericService<Candidatura, Integer, Inscr
         dao.salvar(candidatura);
     }
 
+    @Override
+    public void atualizar(Candidatura candidatura) throws Exception {
+        if (existeCandidatura(candidatura)) {
+            throw new Exception("Professor já está inscrito nesse processo seletivo.");
+        }
+        dao.atualizar(candidatura);
+    }
+
     public boolean existeCandidatura(Candidatura novaCandidatura) throws Exception {
         Fila<Candidatura> candidaturas = dao.buscarTodos();
         while (!candidaturas.isEmpty()) {
@@ -29,4 +37,5 @@ public class InscricaoService extends GenericService<Candidatura, Integer, Inscr
         }
         return false;
     }
+
 }

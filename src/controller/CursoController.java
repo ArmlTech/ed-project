@@ -2,44 +2,67 @@ package controller;
 
 import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
+import model.dto.AreaConhecimento;
 import model.dto.Curso;
+import service.AreaConhecimentoService;
+import service.CursoService;
 
-public class CursoController implements IGenericController<Curso, Integer> {
+public class CursoController implements IGenericCrudController<Curso, Integer> {
+
+    private final CursoService service;
+    private final AreaConhecimentoService areaService;
+
+    public CursoController() {
+        this.service = new CursoService();
+        this.areaService = new AreaConhecimentoService();
+    }
 
     @Override
-    public void salvar(Curso entidade) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'salvar'");
+    public void salvar(Curso entidade) throws Exception {
+        service.salvar(entidade);
     }
 
     @Override
     public Fila<Curso> buscarTodos() throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarTodos'");
+        return service.buscarTodos();
     }
 
     @Override
     public void atualizar(Curso entidade) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
+        service.atualizar(entidade);
     }
 
     @Override
     public void excluir(Curso entidade) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'excluir'");
+        service.excluir(entidade.getId());
     }
 
     @Override
     public Curso buscarPorID(Integer id) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarPorID'");
+        return service.buscarPorID(id);
     }
 
     @Override
     public Curso criarEntidade(Curso entidade, Lista<String> dadosInput) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'criarEntidade'");
+        for (int i = 0, length = dadosInput.size(); i < length; i++) {
+            if (dadosInput.get(i).isBlank()) {
+                throw new Exception("Preencha todos os campos");
+            }
+        }
+        Integer id = (entidade == null) ? -1 : entidade.getId();
+        String nome = dadosInput.get(0);
+        Integer idAreaConhecimento = Integer.parseInt(dadosInput.get(1));
+        
+        Curso curso = new Curso(id, nome, idAreaConhecimento);
+        return curso;
+    }
+
+    public AreaConhecimento buscarAreaPorId(Integer id) throws Exception {
+        return areaService.buscarPorID(id);
+    }
+
+    public Fila<AreaConhecimento> buscarTodosArea() throws Exception {
+       return areaService.buscarTodos();
     }
 
 }

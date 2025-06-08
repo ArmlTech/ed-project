@@ -56,7 +56,7 @@ public class Professor implements IGenericEntity {
 
     @Override
     public String toString() {
-        return nome;
+        return "CPF: " + cpf + " | " + nome;
     }
 
     @Override
