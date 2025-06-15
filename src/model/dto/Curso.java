@@ -41,4 +41,16 @@ public class Curso implements IGenericEntity {
 	public String toString() {
 		return nome;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!(obj instanceof Curso)) return false;
+		Curso curso = (Curso) obj;
+		return id != null && id.equals(curso.id);
+	}
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
 }

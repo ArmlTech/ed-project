@@ -61,11 +61,14 @@ public class DisciplinaController implements IGenericCrudController<Disciplina, 
         String nome = dadosInput.get(0);
         String diaSemana = dadosInput.get(1);
         String horaInicial = dadosInput.get(2);
-        Double qtdHoras = Double.parseDouble(dadosInput.get(3));
         Integer idCurso = Integer.parseInt(dadosInput.get(4));
+        if (idCurso < 0) {
+            throw new Exception("Selecione um curso válido");
+        }
 
+        Double qtdHoras;
         try {
-            qtdHoras = Double.parseDouble(dadosInput.get(4));
+            qtdHoras = Double.parseDouble(dadosInput.get(3));
         } catch (NumberFormatException e) {
             throw new Exception("Digite apenas números no campo: Quantidade de Horas");
         }

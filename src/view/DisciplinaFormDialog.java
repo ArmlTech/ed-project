@@ -58,6 +58,7 @@ public class DisciplinaFormDialog extends GenericFormDialog<Disciplina, Integer,
 
         painel.add(new JLabel("Curso:"));
         comboCurso = new JComboBox<Curso>();
+        comboCurso.addItem(new Curso(-1, "Selecione", 0)); 
         try {
             Fila<Curso> cursos = controller.buscarTodosCursos();
             while(!cursos.isEmpty()){

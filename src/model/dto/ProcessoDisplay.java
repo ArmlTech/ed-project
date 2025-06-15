@@ -15,8 +15,8 @@ public class ProcessoDisplay implements IGenericEntity {
         return idProcesso;
     }
     @Override
-    public void setId(Integer i) {
-        this.idProcesso = i;
+    public void setId(Integer idProcesso) {
+        this.idProcesso = idProcesso;
     }
     public String getNomeDisciplina() {
         return nomeDisciplina;
@@ -30,15 +30,16 @@ public class ProcessoDisplay implements IGenericEntity {
         return "Processo ID: " + idProcesso + " | Disciplina: " + nomeDisciplina;
     }
 
-    @Override
+     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        ProcessoDisplay that = (ProcessoDisplay) obj;
-        return idProcesso.equals(that.idProcesso) && nomeDisciplina.equals(that.nomeDisciplina);
+        if (!(obj instanceof ProcessoDisplay)) return false;
+        ProcessoDisplay other = (ProcessoDisplay) obj;
+        return this.idProcesso.equals(other.idProcesso);
     }
+
     @Override
-	public int hashCode() {
-		return idProcesso != null ? idProcesso.hashCode() : 0;
-	}
+    public int hashCode() {
+        return idProcesso != null ? idProcesso.hashCode() : 0;
+    }
 }

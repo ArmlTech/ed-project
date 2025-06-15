@@ -52,6 +52,9 @@ public class CursoController implements IGenericCrudController<Curso, Integer> {
         Integer id = (entidade == null) ? -1 : entidade.getId();
         String nome = dadosInput.get(0);
         Integer idAreaConhecimento = Integer.parseInt(dadosInput.get(1));
+        if (idAreaConhecimento < 0) {
+            throw new Exception("Selecione uma área de conhecimento válida");
+        }
         
         Curso curso = new Curso(id, nome, idAreaConhecimento);
         return curso;

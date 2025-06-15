@@ -19,8 +19,8 @@ public class ProcessoService extends GenericService<Processo, Integer, ProcessoD
         this.inscricaoService = new InscricaoService();
     }
 
-    public String buscarNomeDisciplina(Integer idProcesso) throws Exception {
-        return disciplinaService.buscarPorID(idProcesso).getNome();
+    public String buscarNomeDisciplinaPorID(Integer id) throws Exception {
+        return disciplinaService.buscarPorID(id).getNome();
     }
 
     public Disciplina buscarDisciplinaPorId(Integer id) throws Exception {
@@ -59,6 +59,11 @@ public class ProcessoService extends GenericService<Processo, Integer, ProcessoD
                 excluir(processo.getId());
             }
         }
+    }
+
+    public String buscarNomeDisciplinaPorProcessoID(Integer idProcesso) throws Exception {
+        Processo processo = buscarPorID(idProcesso);
+        return buscarNomeDisciplinaPorID(processo.getIdDisciplina());
     } 
 
 }

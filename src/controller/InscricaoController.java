@@ -1,7 +1,6 @@
 package controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import br.edu.fateczl.Fila;
 import br.edu.fateczl.Lista;
@@ -61,22 +60,24 @@ public class InscricaoController implements IGenericCrudController<Candidatura, 
         }
 
         Integer id = (entidade == null) ? 0 : entidade.getId();
-        Integer idProcesso = Integer.parseInt(dadosInput.get(1));
-        Integer idProfessor = Integer.parseInt(dadosInput.get(0));
-        if(dadosInput.size() > 2){
-            LocalDate data = LocalDate.parse(dadosInput.get(2), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-            return new Candidatura(id, idProfessor, idProcesso, data);
+        Integer idProcesso = Integer.parseInt(dadosInput.get(0));
+        if (idProcesso < 0) {
+            throw new Exception("Selecione um processo válido");
+        }
+        Integer idProfessor = Integer.parseInt(dadosInput.get(1));
+        if (idProfessor < 0) {
+            throw new Exception("Selecione um professor válido");
         }
 
-        return new Candidatura(id, idProfessor, idProcesso, LocalDate.now());
+        return new Candidatura(id, idProcesso, idProfessor, LocalDate.now());
     }
 
     public Professor buscarProfessorPorId(Integer id) throws Exception {
         return profService.buscarPorID(id);
     }
 
-    public String buscarDisciplinaProcesso(Integer idProcesso) throws Exception {
-        return processoService.buscarNomeDisciplina(idProcesso);
+    public String buscarNomeDisciplinaPorProcessoID(Integer idProcesso) throws Exception {
+        return processoService.buscarNomeDisciplinaPorProcessoID(idProcesso);
     }
 
     public Fila<Professor> buscarTodosProfessores() throws Exception {
@@ -102,7 +103,7 @@ public class InscricaoController implements IGenericCrudController<Candidatura, 
     }
 
     public ProcessoDisplay buscarProcessoDisplayPorId(Integer idProcesso) throws Exception {
-        String nomeDisciplina = processoService.buscarNomeDisciplina(idProcesso);
+        String nomeDisciplina = processoService.buscarNomeDisciplinaPorID(idProcesso);
         return new ProcessoDisplay(idProcesso, nomeDisciplina);
     }
 

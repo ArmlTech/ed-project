@@ -27,7 +27,7 @@ public class InscricaoView extends GenericCrudView<Candidatura, Integer, Inscric
             entidade.getId(),
             controller.buscarProfessorPorId(entidade.getIdProfessor()).getNome(),
             entidade.getIdProcesso(),
-            controller.buscarDisciplinaProcesso(entidade.getIdProcesso())
+            controller.buscarNomeDisciplinaPorProcessoID(entidade.getIdProcesso())
         };
     }
 
@@ -54,7 +54,7 @@ public class InscricaoView extends GenericCrudView<Candidatura, Integer, Inscric
             Candidatura candidatura = controller.buscarPorID(id);
             return "<html><html><div style='width:150px;'>Inscrição ID: " + candidatura.getId() + 
                 "<br>Professor: " + controller.buscarProfessorPorId(candidatura.getIdProfessor()).getNome() +
-                "<br>Disciplina: " + controller.buscarDisciplinaProcesso(candidatura.getIdProcesso()) +
+                "<br>Disciplina: " + controller.buscarNomeDisciplinaPorProcessoID(candidatura.getIdProcesso()) +
                 "<br>Processo: " + candidatura.getIdProcesso()
             + "</div></html>";
         } catch (Exception e) {

@@ -18,7 +18,6 @@ public class ProcessoFormDialog extends GenericFormDialog<Processo, Integer, Pro
     private static final long serialVersionUID = 1L;
 
     JTextField txtID;
-    JComboBox<String> comboStatus;
     JComboBox<Disciplina> comboDisciplina;
 
     public ProcessoFormDialog(String titulo, ProcessoController controller, JFrame parent, Runnable onSuccess, FormMode mode, Processo entidade) {
@@ -35,10 +34,6 @@ public class ProcessoFormDialog extends GenericFormDialog<Processo, Integer, Pro
         txtID.setEnabled(false);
         painel.add(txtID);
         
-        painel.add(new JLabel("Status: "));
-        comboStatus = new JComboBox<>(new String[]{"Ativo", "Inativo"});
-        painel.add(comboStatus);
-
         painel.add(new JLabel("Disciplina: "));
         comboDisciplina = new JComboBox<>();
         comboDisciplina.addItem(new Disciplina(-1, "Selecione", "", "", null, null));
@@ -59,7 +54,6 @@ public class ProcessoFormDialog extends GenericFormDialog<Processo, Integer, Pro
     protected void habilitarCamposPorModo(FormMode currentFormMode) {
         Boolean enabled = (currentFormMode == FormMode.CREATE || currentFormMode == FormMode.EDIT);
         txtID.setEnabled(false);
-        comboStatus.setEnabled(enabled);
         comboDisciplina.setEnabled(enabled);
     }
 
@@ -69,7 +63,6 @@ public class ProcessoFormDialog extends GenericFormDialog<Processo, Integer, Pro
         if(currentFormMode == FormMode.VIEW) {
             try {
                 txtID.setText(entidade.getId().toString());
-                comboStatus.setSelectedItem(entidade.isAberto() ? "Ativo" : "Inativo");
                 comboDisciplina.setSelectedItem(controller.buscarDisciplinaPorId(entidade.getIdDisciplina()));
             } catch (Exception e) {
                 Alerta.erro(ProcessoFormDialog.this, e);
@@ -83,7 +76,6 @@ public class ProcessoFormDialog extends GenericFormDialog<Processo, Integer, Pro
     protected Lista<String> getDadosInput() {
         Lista<String> dadosInput = new Lista<>();
         try {
-            dadosInput.addLast(comboStatus.getSelectedItem().toString());
             Disciplina disciplinaSelecionada = (Disciplina) comboDisciplina.getSelectedItem();
             dadosInput.addLast(Integer.toString(disciplinaSelecionada.getId()));
         } catch (Exception e) {
@@ -95,7 +87,6 @@ public class ProcessoFormDialog extends GenericFormDialog<Processo, Integer, Pro
     @Override
     protected void limparFormulario() {
         txtID.setText("");
-        comboStatus.setSelectedIndex(0);
         comboDisciplina.setSelectedIndex(0);
     }
 

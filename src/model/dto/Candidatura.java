@@ -58,7 +58,7 @@ public class Candidatura implements IGenericEntity {
 				"id=" + id +
 				", idProcesso=" + idProcesso +
 				", idProfessor=" + idProfessor +
-				", data=" + getDataFormatada() +
+				", data=" + data +
 				'}';
 	}
 }

@@ -111,7 +111,7 @@ public class InscricaoFormDialog extends GenericFormDialog<Candidatura, Integer,
     protected void limparFormulario() {
         txtID.setText("");
         comboProfessor.setSelectedItem(new Professor(-1, "000.000.000-00", "Selecione", (float) 0, 0));
-        comboProcesso.setSelectedItem(new Processo(-1, false, 0));
+        comboProcesso.setSelectedItem(new Processo(-1, 0));
     }
 
 }

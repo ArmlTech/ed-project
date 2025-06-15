@@ -72,6 +72,9 @@ public class ProfessorController implements IGenericCrudController<Professor, In
 			throw new Exception("Insira apenas números no campo Quantidade de Pontos");
 		}
 		Integer idArea = Integer.parseInt(dadosInput.get(3));
+		if(idArea < 0){
+			throw new Exception("Insira uma área válida");
+		}
 
 		Professor professor = new Professor(id, cpf, nome, qtdPontos, idArea);
 		return professor;

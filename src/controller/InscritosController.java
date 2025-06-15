@@ -38,8 +38,8 @@ public class InscritosController{
                 Professor professor = professores.remove();
                 if (candidatura.getIdProfessor() == professor.getId()) {
 
-                    String area = areaConhecimentoService.buscarPorID(candidatura.getIdProcesso()).getNome();
-                    String disciplina = processoService.buscarNomeDisciplina(candidatura.getIdProcesso());
+                    String area = areaConhecimentoService.buscarPorID(professor.getAreaID()).getNome();
+                    String disciplina = processoService.buscarNomeDisciplinaPorProcessoID(candidatura.getIdProcesso());
 
                     InscritoDisplay inscrito = new InscritoDisplay(
                         candidatura.getId(),

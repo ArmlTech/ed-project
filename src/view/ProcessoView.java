@@ -14,7 +14,7 @@ public class ProcessoView extends GenericCrudView<Processo, Integer, ProcessoCon
 
     private final static String titulo = "Gerenciar Processos";
     private final static String[] colunas = {
-        "ID", "Status", "ID da Disciplina"
+        "ID", "Disciplina"
     };
     private final static ProcessoController controller = new ProcessoController();
 
@@ -26,7 +26,6 @@ public class ProcessoView extends GenericCrudView<Processo, Integer, ProcessoCon
     protected Object[] extrairLinha(Processo entidade) throws Exception {
         return new Object[]{
             entidade.getId(),
-            entidade.isAberto() ? "Ativo" : "Inativo",
             controller.buscarNomeDisciplina(entidade.getIdDisciplina())
         };
     }
@@ -53,7 +52,6 @@ public class ProcessoView extends GenericCrudView<Processo, Integer, ProcessoCon
         try {
             Processo processo = controller.buscarPorID(id);
             return "<html><html><div style='width:150px;'>Processo ID: " + processo.getId() + "<br>" +
-                   "Status: " + (processo.isAberto() ? "Ativo" : "Inativo") + "<br>" +
                    "ID da Disciplina: " + processo.getIdDisciplina() + "</div></html>";
         } catch (Exception e) {
             return "Erro: " + e.getMessage();

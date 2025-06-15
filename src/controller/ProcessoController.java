@@ -33,11 +33,8 @@ public class ProcessoController implements IGenericCrudController<Processo, Inte
         inicializarTabelaHash();
         while (!processos.isEmpty()) {
             Processo processo = processos.remove();
-            if (processo.isAberto()) {
-                int index = hashCode(processo.getId());
-                tabelaHashProcessos[index].addLast(processo);
-            }
-            
+            int index = hashCode(processo.getId());
+            tabelaHashProcessos[index].addLast(processo);           
         }
         return tabelaHashProcessos;
     }
@@ -70,15 +67,17 @@ public class ProcessoController implements IGenericCrudController<Processo, Inte
 		}
 
 		Integer id = (entidade == null) ? 0 : entidade.getId();
-		boolean isAberto = dadosInput.get(0).equalsIgnoreCase("Ativo");
-        Integer idDisciplina = Integer.parseInt(dadosInput.get(1));
+        Integer idDisciplina = Integer.parseInt(dadosInput.get(0));
+        if (idDisciplina <= 0) {
+            throw new Exception("Insira uma disciplina válida.");
+        }
 	
-        Processo processo = new Processo(id, isAberto, idDisciplina);
+        Processo processo = new Processo(id, idDisciplina);
         return processo;
     }
 
     public String buscarNomeDisciplina(Integer idDisciplina) throws Exception {
-        return service.buscarNomeDisciplina(idDisciplina);
+        return service.buscarNomeDisciplinaPorID(idDisciplina);
     }
 
     public Lista<Disciplina> buscarTodasDisciplinas() throws Exception {
