@@ -48,7 +48,7 @@ public class CursoView extends GenericCrudView<Curso, Integer, CursoController> 
     protected String getLabelTextEntidadeSelecionada(Integer id) {
         try {
             Curso curso = controller.buscarPorID(id);
-            return  "<html><div style='width:150px;'>"  + curso.getId() + 
+            return  "<html><div style='width:150px;'>ID: "  + curso.getId() + 
                     "<br>Nome: " + curso.getNome() + 
                     "<br>Área: " + 
                     controller.buscarAreaPorId(curso.getIdAreaConhecimento()).getNome() + "</div></html>";
